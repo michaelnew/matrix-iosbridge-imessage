@@ -49,3 +49,11 @@
     * [ ] When receiving invite
     * [ ] When receiving message
   * [ ] Option to use own Matrix account for messages sent from iMessage mobile/other web clients
+  
+  
+  ## Phase 1 
+  - replicate core functionality of https://github.com/matrix-hacks/matrix-puppet-imessage
+  - eg register appservice by copying yaml to homeserver
+  
+  ## Phase 2
+  - eliminate homeserver reset when adding new user
