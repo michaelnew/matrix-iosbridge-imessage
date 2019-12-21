@@ -2,50 +2,49 @@ import UIKit
 
 class RootViewController: UITableViewController {
 
-	var objects: [Date] = []
+    var objects: [Date] = []
 
-	override func loadView() {
-		super.loadView()
+    override func loadView() {
+        super.loadView()
 
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
-		title = "Root View Controller"
-		navigationItem.leftBarButtonItem = editButtonItem
-		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-	}
+        title = "Root View Controller"
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+    }
 
-	@objc func addButtonTapped(_ sender: Any) {
-		objects.insert(Date(), at: 0)
-		tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-	}
+    @objc func addButtonTapped(_ sender: Any) {
+        objects.insert(Date(), at: 0)
+        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+    }
 
-	// MARK: - Table View Data Source
+    // MARK: - Table View Data Source
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
 
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return objects.count
+    }
 
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return objects.count
-	}
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let date = objects[indexPath.row]
+        cell.textLabel!.text = date.description
+        return cell
+    }
 
-		let date = objects[indexPath.row]
-		cell.textLabel!.text = date.description
-		return cell
-	}
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        objects.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
 
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		objects.remove(at: indexPath.row)
-		tableView.deleteRows(at: [indexPath], with: .automatic)
-	}
+    // MARK: - Table View Delegate
 
-	// MARK: - Table View Delegate
-
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-	}
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
 }
