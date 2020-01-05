@@ -35,8 +35,7 @@ the generation of a class list and an automatic constructor.
 
 //#import <ChatKit/CKConversation.h>
 #import <ChatKit/CKConversationList.h>
-//#import <IMCore/IMChat.h>
-//#import <IMCore/IMHandle.h>
+#import <Foundation/NSDistributedNotificationCenter.h>
 #import <version.h>
 
 @interface NSObject (Private)
@@ -45,6 +44,7 @@ the generation of a class list and an automatic constructor.
 
 @interface IMMessage: NSObject {}
 @property (setter=_updateText:,nonatomic,retain) NSAttributedString * text; 
+-(NSString *) guid;
 @end
 
 @interface IMChat: NSObject {}
@@ -80,7 +80,8 @@ the generation of a class list and an automatic constructor.
 
 -(void)sendMessage:(id)arg1 newComposition:(BOOL)arg2 {
    %orig;
-   NSLog(@"msghk: %@", self.chat.lastMessage.text);
+   NSLog(@"msghk: message: %@", self.chat.lastMessage.text);
+   NSLog(@"msghk: guid: %@", [self.chat.lastMessage guid]);
 }
 
 - (void)setLocalUserIsTyping:(BOOL)isTyping {
@@ -89,7 +90,7 @@ the generation of a class list and an automatic constructor.
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[NSBundle mainBundle].bundleIdentifier forKey:@"id"];
     [userInfo setObject:@"SpringBoard" forKey:@"type"];
-    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"net.example.tweak/sendToApp" object:nil userInfo:userInfo];
+    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"messagehook" object:nil userInfo:userInfo];
 }
 
 %end

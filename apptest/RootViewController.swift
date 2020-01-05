@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 
 class RootViewController: UITableViewController {
 
@@ -9,9 +10,18 @@ class RootViewController: UITableViewController {
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
-        title = "Root View Controller"
+        title = "Messges"
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+
+        NSLog("msghk: Connecting to notification center")
+        let center = NSDistributedNotificationCenter.default!
+        let mainQueue = OperationQueue.main
+        center.addObserver(forName: NSNotification.Name("messagehook"), object: nil, queue: mainQueue) { (note) in
+            NSLog("msghk: got notification")
+        }
+
+	//center.post(name:NSNotification.Name("messagehook"), object: nil)
     }
 
     @objc func addButtonTapped(_ sender: Any) {
