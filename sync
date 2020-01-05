@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd "$(dirname "$0")" # make sure we're in this script's directory
+REMOTE=mobile@192.168.43.190
+
+rsync -r ./ ${REMOTE}:/opt/mobile/projects/matrix-iosbridge-imessage
