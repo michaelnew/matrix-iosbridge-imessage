@@ -38,7 +38,6 @@ the generation of a class list and an automatic constructor.
 //#import <IMCore/IMChat.h>
 //#import <IMCore/IMHandle.h>
 #import <version.h>
-#import <os/log.h>
 
 @interface NSObject (Private)
 - (NSString*)_methodDescription;
@@ -87,6 +86,10 @@ the generation of a class list and an automatic constructor.
 - (void)setLocalUserIsTyping:(BOOL)isTyping {
     %orig;
     NSLog(@"msghk: User typing: %d", isTyping);
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[NSBundle mainBundle].bundleIdentifier forKey:@"id"];
+    [userInfo setObject:@"SpringBoard" forKey:@"type"];
+    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"net.example.tweak/sendToApp" object:nil userInfo:userInfo];
 }
 
 %end
