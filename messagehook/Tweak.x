@@ -33,7 +33,6 @@ the generation of a class list and an automatic constructor.
 %end
 */
 
-//#import <ChatKit/CKConversation.h>
 #import <ChatKit/CKConversationList.h>
 #import <Foundation/NSDistributedNotificationCenter.h>
 #import <version.h>
@@ -53,9 +52,14 @@ the generation of a class list and an automatic constructor.
 
 @interface CKConversation: NSObject {}
 -(void) splitLog:(NSString*)logString;
+-(void) sendNewMessageToBridge:(NSString *)message;
 -(void) setLocalUserIsTyping:(BOOL)isTyping;
 @property (retain, nonatomic) IMChat* chat;
 @end
+
+%hook CKChatControllerDelegate
+
+%end
 
 
 %hook CKConversation
@@ -78,6 +82,15 @@ the generation of a class list and an automatic constructor.
     }
 }
 
+%new
+-(void)sendNewMessageToBridge:(NSString *)message {
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[NSBundle mainBundle].bundleIdentifier forKey:@"id"];
+    [userInfo setObject:@"SpringBoard" forKey:@"type"];
+    [userInfo setObject:message forKey:@"message"];
+    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"messagehook" object:nil userInfo:userInfo];
+}
+
 -(void)sendMessage:(id)arg1 newComposition:(BOOL)arg2 {
    %orig;
    NSLog(@"msghk: message: %@", self.chat.lastMessage.text);
@@ -93,8 +106,23 @@ the generation of a class list and an automatic constructor.
     [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"messagehook" object:nil userInfo:userInfo];
 }
 
+- (void)_chatItemsDidChange:(id)arg1 {
+    %orig;
+    NSLog(@"msghk: chat items changed");
+    //NSLog(@"msghk: message: %@", self.chat.lastMessage.text);
+    [self sendNewMessageToBridge:self.chat.lastMessage.text.string];
+}
+
+- (void)_chatPropertiesChanged:(id)arg1 {
+    %orig;
+    NSLog(@"msghk: chat properties changed");
+    //NSLog(@"msghk: message: %@", self.chat.lastMessage.text);
+}
+
+
 %end
 
+// Currently, hooking IMDaemon isn't working
 %hook IMDaemon
 -(BOOL)daemonInterface:(id)arg1 shouldGrantAccessForPID:(int)arg2 auditToken:(id)arg3 portName:(id)arg4 listenerConnection:(id)arg5 setupInfo:(id)arg6 setupResponse:(id*)arg7 {
     NSLog(@"msghk: hooked IMDaemon");
@@ -108,7 +136,7 @@ the generation of a class list and an automatic constructor.
 
 %hook IMDaemonController
 - (BOOL)setCapabilities:(id)capabilities forListenerID:(NSString *)listenerID {
-    NSLog(@"hooked IMDaemonController");
+    NSLog(@"msghk: hooked IMDaemonController");
 	NSLog(@"msghk: Capabilities: %@, lsitenerID: %@", capabilities, listenerID);
 	%orig;
 	//%orig(Chats, listenerID);

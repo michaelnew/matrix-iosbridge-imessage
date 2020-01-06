@@ -3,7 +3,7 @@ import Foundation
 
 class RootViewController: UITableViewController {
 
-    var objects: [Date] = []
+    var objects: [String] = []
 
     override func loadView() {
         super.loadView()
@@ -19,13 +19,17 @@ class RootViewController: UITableViewController {
         let mainQueue = OperationQueue.main
         center.addObserver(forName: NSNotification.Name("messagehook"), object: nil, queue: mainQueue) { (note) in
             NSLog("msghk: got notification")
+            let message = note.userInfo?["message"] as? String ?? "no message"
+            //NSLog("msghk: \(note)")
+            self.objects.insert(message, at: 0)
+            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         }
 
 	//center.post(name:NSNotification.Name("messagehook"), object: nil)
     }
 
     @objc func addButtonTapped(_ sender: Any) {
-        objects.insert(Date(), at: 0)
+        objects.insert("HELLO", at: 0)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
 
@@ -41,8 +45,7 @@ class RootViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let date = objects[indexPath.row]
-        cell.textLabel!.text = date.description
+        cell.textLabel!.text = objects[indexPath.row]
         return cell
     }
 
