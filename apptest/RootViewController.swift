@@ -10,9 +10,7 @@ class RootViewController: UITableViewController {
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
-        title = "Messges"
-        navigationItem.leftBarButtonItem = editButtonItem
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        title = "Messages"
 
         NSLog("msghk: Connecting to notification center")
         let center = NSDistributedNotificationCenter.default!
@@ -20,17 +18,9 @@ class RootViewController: UITableViewController {
         center.addObserver(forName: NSNotification.Name("messagehook"), object: nil, queue: mainQueue) { (note) in
             NSLog("msghk: got notification")
             let message = note.userInfo?["message"] as? String ?? "no message"
-            //NSLog("msghk: \(note)")
             self.objects.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         }
-
-	//center.post(name:NSNotification.Name("messagehook"), object: nil)
-    }
-
-    @objc func addButtonTapped(_ sender: Any) {
-        objects.insert("HELLO", at: 0)
-        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
 
     // MARK: - Table View Data Source
