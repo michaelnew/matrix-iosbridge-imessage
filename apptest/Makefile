@@ -4,6 +4,7 @@ include $(THEOS)/makefiles/common.mk
 APPLICATION_NAME = apptest
 apptest_FILES = AppDelegate.swift RootViewController.swift
 apptest_FRAMEWORKS = UIKit CoreGraphics Foundation
+apptest_EXTRA_FRAMEWORKS = AFNetworking
 
 include $(THEOS_MAKE_PATH)/application.mk
 
