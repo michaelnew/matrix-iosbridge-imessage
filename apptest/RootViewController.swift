@@ -1,6 +1,6 @@
 import UIKit
 import Foundation
-import AFNetworking
+import SwiftMatrixSDK
 
 class RootViewController: UITableViewController {
 
@@ -21,6 +21,19 @@ class RootViewController: UITableViewController {
             let message = note.userInfo?["message"] as? String ?? "no message"
             self.objects.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        }
+    }
+
+    func testMatrix() {
+        let homeServerUrl = URL(string: "https://mikenew.io/matrix")!
+        let mxRestClient = MXRestClient(__homeServer:  "https://mikenew.io/matrix", andOnUnrecognizedCertificateBlock: nil)
+        mxRestClient.publicRooms { response in
+            switch response {
+                case .success(let rooms):
+                // rooms is an array of MXPublicRoom objects containing information like room id
+                NSLog("msghk: The public rooms are: \(rooms)")
+                case .failure: break
+            }
         }
     }
 
