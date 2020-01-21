@@ -15,5 +15,5 @@ plugin 'cocoapods-rome', { :pre_compile => Proc.new { |installer|
 }
 
 target 'caesar' do
-  pod 'MatrixSDK'
+  pod 'SwiftMatrixSDK'
 end
