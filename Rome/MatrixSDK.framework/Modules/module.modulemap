@@ -1,6 +1,0 @@
-framework module MatrixSDK {
-  umbrella header "MatrixSDK-umbrella.h"
-
-  export *
-  module * { export * }
-}
