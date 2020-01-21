@@ -71,3 +71,4 @@ fastlane/test_output
 .theos/
 packages/
 Rome/
+Pods/
