@@ -16,14 +16,6 @@ PODS:
     - AFNetworking/NSURLSession
   - GZIP (1.2.3)
   - libbase58 (0.1.4)
-  - MatrixSDK (0.15.2):
-    - MatrixSDK/Core (= 0.15.2)
-  - MatrixSDK/Core (0.15.2):
-    - AFNetworking (~> 3.2.0)
-    - GZIP (~> 1.2.2)
-    - libbase58 (~> 0.1.4)
-    - OLMKit (~> 3.1.0)
-    - Realm (~> 3.17.3)
   - OLMKit (3.1.0):
     - OLMKit/olmc (= 3.1.0)
     - OLMKit/olmcpp (= 3.1.0)
@@ -32,27 +24,42 @@ PODS:
   - Realm (3.17.3):
     - Realm/Headers (= 3.17.3)
   - Realm/Headers (3.17.3)
+  - SwiftMatrixSDK (0.15.2):
+    - AFNetworking (~> 3.2.0)
+    - GZIP (~> 1.2.2)
+    - libbase58 (~> 0.1.4)
+    - OLMKit (~> 3.1.0)
+    - Realm (~> 3.17.3)
 
 DEPENDENCIES:
-  - MatrixSDK
+  - SwiftMatrixSDK (from `https://github.com/michaelnew/matrix-ios-sdk`, branch `develop`)
 
 SPEC REPOS:
   trunk:
     - AFNetworking
     - GZIP
     - libbase58
-    - MatrixSDK
     - OLMKit
     - Realm
+
+EXTERNAL SOURCES:
+  SwiftMatrixSDK:
+    :branch: develop
+    :git: https://github.com/michaelnew/matrix-ios-sdk
+
+CHECKOUT OPTIONS:
+  SwiftMatrixSDK:
+    :commit: 47c8450539838414d45be5a58d6dbff8dce52b7c
+    :git: https://github.com/michaelnew/matrix-ios-sdk
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   GZIP: af5c90ef903776a7e9afe6ebebd794a84a2929d4
   libbase58: 7c040313537b8c44b6e2d15586af8e21f7354efd
-  MatrixSDK: f83bd3c5519c1cb9ac3998f6423574cf528f0250
   OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
   Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
+  SwiftMatrixSDK: c10f13c0e1aeff1b9670515602bcb3b89317198f
 
-PODFILE CHECKSUM: 8c3112db710401b0a8007523e21a08ebf2d9e16e
+PODFILE CHECKSUM: bbb1343486af1dea0cc138bf2d8132bf4634cc97
 
 COCOAPODS: 1.8.4
