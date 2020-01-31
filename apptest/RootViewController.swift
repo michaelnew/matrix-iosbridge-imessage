@@ -22,19 +22,23 @@ class RootViewController: UITableViewController {
             self.objects.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         }
+
+        self.testMatrix()
     }
 
     func testMatrix() {
         let homeServerUrl = URL(string: "https://mikenew.io/matrix")!
-        let mxRestClient = MXRestClient(__homeServer:  "https://mikenew.io/matrix", andOnUnrecognizedCertificateBlock: nil)
-        mxRestClient.publicRooms { response in
+        let mxRestClient = MXRestClient(homeServer: homeServerUrl, unrecognizedCertificateHandler: nil)
+        mxRestClient.publicRooms(onServer:homeServerUrl.absoluteString, limit: 100, completion: { response in
             switch response {
-                case .success(let rooms):
+            case .success(let rooms):
+        
                 // rooms is an array of MXPublicRoom objects containing information like room id
-                NSLog("msghk: The public rooms are: \(rooms)")
-                case .failure: break
+                print("The public rooms are: \(rooms)")
+        
+            case .failure: break
             }
-        }
+        })
     }
 
     // MARK: - Table View Data Source
@@ -53,7 +57,7 @@ class RootViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         objects.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
