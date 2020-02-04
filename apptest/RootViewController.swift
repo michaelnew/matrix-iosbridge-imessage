@@ -21,10 +21,13 @@ class RootViewController: UITableViewController {
             let message = note.userInfo?["message"] as? String ?? "no message"
             self.objects.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            self.send(message: message)
         }
 
         self.testMatrix()
     }
+
+    var matrixClient: MXRestClient?
 
     func testMatrix() {
         // Load settings from user defaults
@@ -36,9 +39,9 @@ class RootViewController: UITableViewController {
                                 userId: userId,
                                 accessToken:token )
 
-        let mxRestClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
+        self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
 
-        guard let mxSession = MXSession(matrixRestClient: mxRestClient) else {
+        guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {
             NSLog("couldn't create matrix session")
             return
         }
@@ -50,6 +53,12 @@ class RootViewController: UITableViewController {
             // now wer can get all rooms with:
             NSLog("\(mxSession.rooms)")
         }
+    }
+
+    func send(message: String) {
+        self.matrixClient?.sendTextMessage(toRoom: "!lzoKElzYKTdgaONpcI:mikenew.io", text: message, completion: { (response) in
+            NSLog("sent message hopefully")
+        })
     }
 
     // MARK: - Table View Data Source
