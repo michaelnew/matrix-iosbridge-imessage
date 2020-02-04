@@ -32,7 +32,7 @@ PODS:
     - Realm (~> 3.17.3)
 
 DEPENDENCIES:
-  - SwiftMatrixSDK (from `https://github.com/michaelnew/matrix-ios-sdk`, branch `develop`)
+  - SwiftMatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk`, branch `develop`)
 
 SPEC REPOS:
   trunk:
@@ -45,12 +45,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   SwiftMatrixSDK:
     :branch: develop
-    :git: https://github.com/michaelnew/matrix-ios-sdk
+    :git: https://github.com/matrix-org/matrix-ios-sdk
 
 CHECKOUT OPTIONS:
   SwiftMatrixSDK:
-    :commit: 47c8450539838414d45be5a58d6dbff8dce52b7c
-    :git: https://github.com/michaelnew/matrix-ios-sdk
+    :commit: 664ef3dfea2778f1d55fe44ae66917baa6869e71
+    :git: https://github.com/matrix-org/matrix-ios-sdk
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
@@ -58,8 +58,8 @@ SPEC CHECKSUMS:
   libbase58: 7c040313537b8c44b6e2d15586af8e21f7354efd
   OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
   Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
-  SwiftMatrixSDK: c10f13c0e1aeff1b9670515602bcb3b89317198f
+  SwiftMatrixSDK: 5d7d7acd2b9d77353f537b045a10d48d9be4f004
 
-PODFILE CHECKSUM: bbb1343486af1dea0cc138bf2d8132bf4634cc97
+PODFILE CHECKSUM: 9fb8228c8774629a169ccd17fc88fe07c2e1a1f7
 
 COCOAPODS: 1.8.4
