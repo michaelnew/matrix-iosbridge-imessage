@@ -1,5 +1,6 @@
 /*
  Copyright 2019 New Vector Ltd
+ Copyright 2019 The Matrix.org Foundation C.I.C
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,11 +17,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MXKeyVerificationRequest.h"
 #import "MXDeviceVerificationTransaction.h"
+#import "MXKeyVerification.h"
 
 #import "MXSASTransaction.h"
 #import "MXIncomingSASTransaction.h"
 #import "MXOutgoingSASTransaction.h"
+
+#import "MXEvent.h"
+#import "MXHTTPOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,9 +38,27 @@ FOUNDATION_EXPORT NSString *const MXDeviceVerificationErrorDomain;
 typedef enum : NSUInteger
 {
     MXDeviceVerificationUnknownDeviceCode,
-    MXDeviceVerificationUnsupportedMethodCode
+    MXDeviceVerificationUnsupportedMethodCode,
+    MXDeviceVerificationUnknownRoomCode,
+    MXDeviceVerificationUnknownIdentifier,
 } MXDeviceVerificationErrorCode;
 
+
+#pragma mark - Requests
+
+/**
+ Posted on new device verification request.
+ */
+FOUNDATION_EXPORT NSString *const MXDeviceVerificationManagerNewRequestNotification;
+
+/**
+ The key in the notification userInfo dictionary containing the `MXKeyVerificationRequest` instance.
+ */
+FOUNDATION_EXPORT NSString *const MXDeviceVerificationManagerNotificationRequestKey;
+
+
+
+#pragma mark - Transactions
 
 /**
  Posted on new device verification transaction.
@@ -53,6 +77,40 @@ FOUNDATION_EXPORT NSString *const MXDeviceVerificationManagerNotificationTransac
  https://github.com/matrix-org/matrix-doc/issues/1267.
  */
 @interface MXDeviceVerificationManager : NSObject
+
+
+#pragma mark - Requests
+
+/**
+ The timeout for requests.
+ Default is 5 min.
+ */
+@property (nonatomic) NSTimeInterval requestTimeout;
+
+/**
+ Make a key verification request by Direct Message.
+
+ @param userId the other user id.
+ @param roomId the room to exchange direct messages. Nil to let SDK set up the room.
+ @param fallbackText a text description if the app does not support verification by DM.
+ @param methods Verification methods like MXKeyVerificationMethodSAS.
+ @param success a block called when the operation succeeds.
+ @param failure a block called when the operation fails.
+ */
+- (void)requestVerificationByDMWithUserId:(NSString*)userId
+                                   roomId:(nullable NSString*)roomId
+                             fallbackText:(NSString*)fallbackText
+                                  methods:(NSArray<NSString*>*)methods
+                                  success:(void(^)(MXKeyVerificationRequest *request))success
+                                  failure:(void(^)(NSError *error))failure;
+
+/**
+ All pending verification requests.
+ */
+@property (nonatomic, readonly) NSArray<MXKeyVerificationRequest*> *pendingRequests;
+
+
+#pragma mark - Transactions
 
 /**
  Begin a device verification.
@@ -75,6 +133,29 @@ FOUNDATION_EXPORT NSString *const MXDeviceVerificationManagerNotificationTransac
  @param complete a block called with all transactions.
  */
 - (void)transactions:(void(^)(NSArray<MXDeviceVerificationTransaction*> *transactions))complete;
+
+
+#pragma mark - Verification status
+
+/**
+ Retrieve the verification status from an event.
+
+ @param event an event in the verification process.
+ @param success a block called when the operation succeeds.
+ @param failure a block called when the operation fails.
+ @return an HTTP operation or nil if the response is synchronous.
+ */
+- (nullable MXHTTPOperation *)keyVerificationFromKeyVerificationEvent:(MXEvent*)event
+                                                              success:(void(^)(MXKeyVerification *keyVerification))success
+                                                              failure:(void(^)(NSError *error))failure;
+
+/**
+ Extract the verification identifier from an event.
+
+ @param event an event in the verification process.
+ @return the key verification id. Nil if the event is not a verification event.
+ */
+- (nullable NSString *)keyVerificationIdFromDMEvent:(MXEvent*)event;
 
 @end
 

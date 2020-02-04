@@ -19,6 +19,7 @@
 
 
 #import "MXDeviceInfo.h"
+#import "MXCrossSigningInfo.h"
 #import "MXCryptoConstants.h"
 #import "MXEventDecryptionResult.h"
 
@@ -29,6 +30,8 @@
 
 #import "MXKeyBackup.h"
 #import "MXDeviceVerificationManager.h"
+#import "MXCrossSigning.h"
+#import "MXUsersTrustLevelSummary.h"
 
 @class MXSession;
 
@@ -87,6 +90,11 @@ FOUNDATION_EXPORT NSString *const kMXCryptoRoomKeyRequestCancellationNotificatio
  The device verification manager.
  */
 @property (nonatomic, readonly) MXDeviceVerificationManager *deviceVerificationManager;
+
+/**
+ The cross-signing manager.
+ */
+@property (nonatomic, readonly) MXCrossSigning *crossSigning;
 
 /**
  Create a new crypto instance and data for the given user.
@@ -206,6 +214,9 @@ FOUNDATION_EXPORT NSString *const kMXCryptoRoomKeyRequestCancellationNotificatio
  */
 - (MXDeviceInfo *)eventDeviceInfo:(MXEvent*)event;
 
+
+#pragma mark - Local trust
+
 /**
  Update the blocked/verified state of the given device
 
@@ -230,8 +241,37 @@ FOUNDATION_EXPORT NSString *const kMXCryptoRoomKeyRequestCancellationNotificatio
 - (void)setDevicesKnown:(MXUsersDevicesMap<MXDeviceInfo*>*)devices
                complete:(void (^)(void))complete;
 
+
+#pragma mark - Cross-signing trust
+
+- (MXUserTrustLevel*)trustLevelForUser:(NSString*)userId;
+- (MXDeviceTrustLevel*)deviceTrustLevelForDevice:(NSString*)deviceId ofUser:(NSString*)userId;
+
+
 /**
- Get the device keys for a list of users.
+ Get a summary of users trust level (trusted users and devices count).
+
+ @param userIds The user ids.
+ @param success A block object called when the operation succeeds.
+ @param failure A block object called when the operation fails.
+ */
+- (void)trustLevelSummaryForUserIds:(NSArray<NSString*>*)userIds
+                            success:(void (^)(MXUsersTrustLevelSummary *usersTrustLevelSummary))success
+                            failure:(void (^)(NSError *error))failure;
+
+/**
+ Get the stored summary of users trust level (trusted users and devices count).
+ 
+ @param userIds The user ids.
+ @return the trust summary.
+ */
+- (MXUsersTrustLevelSummary *)trustLevelSummaryForUserIds:(NSArray<NSString*>*)userIds;
+
+
+#pragma mark - Users keys
+
+/**
+ Get the device and cross-sigining keys for a list of users.
 
  Keys will be downloaded from the matrix homeserver and stored into the crypto store
  if the information in the store is not up-to-date.
@@ -247,8 +287,37 @@ FOUNDATION_EXPORT NSString *const kMXCryptoRoomKeyRequestCancellationNotificatio
  */
 - (MXHTTPOperation*)downloadKeys:(NSArray<NSString*>*)userIds
                    forceDownload:(BOOL)forceDownload
-                         success:(void (^)(MXUsersDevicesMap<MXDeviceInfo*> *usersDevicesInfoMap))success
+                         success:(void (^)(MXUsersDevicesMap<MXDeviceInfo*> *usersDevicesInfoMap,
+                                           NSDictionary<NSString* /* userId*/, MXCrossSigningInfo*> *crossSigningKeysMap))success
                          failure:(void (^)(NSError *error))failure;
+
+/**
+ Get the stored cross-siging information of a user.
+
+ @param userId The user.
+ @return the cross-signing information if any.
+ */
+- (MXCrossSigningInfo *)crossSigningKeysForUser:(NSString*)userId;
+
+
+/**
+ Retrieve the known devices for a user.
+
+ @param userId The user id.
+ @return A map from device id to 'MXDevice' object for the device or nil if we
+         haven't managed to get a list of devices for this user yet.
+ */
+- (NSDictionary<NSString*, MXDeviceInfo*>*)devicesForUser:(NSString*)userId;
+
+/**
+ Get the stored information about a device.
+
+ @param deviceId The device.
+ @param userId The device user.
+ @return the device if any.
+ */
+- (MXDeviceInfo *)deviceWithDeviceId:(NSString*)deviceId ofUser:(NSString*)userId;
+
 
 /**
  Reset replay attack data for the given timeline.

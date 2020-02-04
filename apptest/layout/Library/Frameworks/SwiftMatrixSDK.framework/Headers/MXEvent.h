@@ -32,7 +32,7 @@
  Custom events types, out of the specification, may exist. In this case, 
  `MXEventTypeString` must be checked.
  */
-typedef enum : NSUInteger
+typedef NS_ENUM(NSInteger, MXEventType)
 {
     MXEventTypeRoomName = 0,
     MXEventTypeRoomTopic,
@@ -76,10 +76,11 @@ typedef enum : NSUInteger
     MXEventTypeKeyVerificationKey,
     MXEventTypeKeyVerificationMac,
     MXEventTypeKeyVerificationCancel,
+    MXEventTypeKeyVerificationDone,
 
     // The event is a custom event. Refer to its `MXEventTypeString` version
     MXEventTypeCustom = 1000
-} MXEventType NS_REFINED_FOR_SWIFT;
+} NS_REFINED_FOR_SWIFT;
 
 /**
  Types of Matrix events - String version
@@ -130,6 +131,7 @@ FOUNDATION_EXPORT NSString *const kMXEventTypeStringKeyVerificationAccept;
 FOUNDATION_EXPORT NSString *const kMXEventTypeStringKeyVerificationKey;
 FOUNDATION_EXPORT NSString *const kMXEventTypeStringKeyVerificationMac;
 FOUNDATION_EXPORT NSString *const kMXEventTypeStringKeyVerificationCancel;
+FOUNDATION_EXPORT NSString *const kMXEventTypeStringKeyVerificationDone;
 
 /**
  Types of room messages
@@ -144,6 +146,7 @@ FOUNDATION_EXPORT NSString *const kMXMessageTypeVideo;
 FOUNDATION_EXPORT NSString *const kMXMessageTypeLocation;
 FOUNDATION_EXPORT NSString *const kMXMessageTypeFile;
 FOUNDATION_EXPORT NSString *const kMXMessageTypeServerNotice;
+FOUNDATION_EXPORT NSString *const kMXMessageTypeKeyVerificationRequest;
 
 /**
  Event relations
@@ -444,6 +447,14 @@ extern NSString *const kMXEventIdentifierKey;
  @return Return edited event with replace event content.
  */
 - (MXEvent*)editedEventFromReplacementEvent:(MXEvent*)event;
+
+/**
+ Returns the event with a new reference relation as it should come from the sync.
+
+ @param event The reference event.
+ @return Return an updated event with the new relation.
+ */
+- (MXEvent*)eventWithNewReferenceRelation:(MXEvent*)referenceEvent;
 
 /**
  Comparator to use to order array of events by their originServerTs value.
