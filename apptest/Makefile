@@ -1,4 +1,4 @@
-TARGET := iphone:clang:11.2:10.3
+TARGET := iphone:clang:11.2:12.2
 include $(THEOS)/makefiles/common.mk
 
 THEOS_PLATFORM_DEB_COMPRESSION_TYPE=gzip

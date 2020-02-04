@@ -22,19 +22,23 @@ class RootViewController: UITableViewController {
             self.objects.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         }
+
+        self.testMatrix()
     }
 
     func testMatrix() {
-        let homeServerUrl = URL(string: "https://mikenew.io/matrix")!
         let mxRestClient = MXRestClient(__homeServer:  "https://mikenew.io/matrix", andOnUnrecognizedCertificateBlock: nil)
-        mxRestClient.publicRooms { response in
+        mxRestClient!.publicRooms(onServer: "https://mikenew.io/matrix", limit: 100, completion: { response in
             switch response {
                 case .success(let rooms):
                 // rooms is an array of MXPublicRoom objects containing information like room id
                 NSLog("msghk: The public rooms are: \(rooms)")
-                case .failure: break
+
+                case .failure: 
+                NSLog("msghk: failed finding public rooms")
+                break
             }
-        }
+        })
     }
 
     // MARK: - Table View Data Source
