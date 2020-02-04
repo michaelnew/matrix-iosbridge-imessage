@@ -27,18 +27,29 @@ class RootViewController: UITableViewController {
     }
 
     func testMatrix() {
-        let mxRestClient = MXRestClient(__homeServer:  "https://mikenew.io/matrix", andOnUnrecognizedCertificateBlock: nil)
-        mxRestClient!.publicRooms(onServer: "https://mikenew.io/matrix", limit: 100, completion: { response in
-            switch response {
-                case .success(let rooms):
-                // rooms is an array of MXPublicRoom objects containing information like room id
-                NSLog("msghk: The public rooms are: \(rooms)")
+        // Load settings from user defaults
+        guard let token = UserDefaults.standard.string(forKey: "matrixAccessToken") else { return }
+        guard let userId = UserDefaults.standard.string(forKey: "matrixBotUserId") else { return }
+        guard let homeServerUrl = UserDefaults.standard.string(forKey: "matrixHomeServerUrl") else { return }
 
-                case .failure: 
-                NSLog("msghk: failed finding public rooms")
-                break
-            }
-        })
+        let credentials = MXCredentials(homeServer: homeServerUrl,
+                                userId: userId,
+                                accessToken:token )
+
+        let mxRestClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
+
+        guard let mxSession = MXSession(matrixRestClient: mxRestClient) else {
+            NSLog("couldn't create matrix session")
+            return
+        }
+
+        mxSession.start { response in
+            guard response.isSuccess else { return }
+
+            // mxSession is ready to be used
+            // now wer can get all rooms with:
+            NSLog("\(mxSession.rooms)")
+        }
     }
 
     // MARK: - Table View Data Source
@@ -57,7 +68,7 @@ class RootViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         objects.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
