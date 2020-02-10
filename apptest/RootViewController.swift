@@ -19,9 +19,11 @@ class RootViewController: UITableViewController {
         center.addObserver(forName: NSNotification.Name("messagehook"), object: nil, queue: mainQueue) { (note) in
             NSLog("msghk: got notification")
             let message = note.userInfo?["message"] as? String ?? "no message"
+            let guid = note.userInfo?["guid"] as? String ?? "guid not found"
+            let name = note.userInfo?["recipientName"] as? String ?? "recipient unkown"
             self.objects.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-            self.send(message: message)
+            self.send(message: "\(name): " + message + " (guid: \(guid))")
         }
 
         self.testMatrix()

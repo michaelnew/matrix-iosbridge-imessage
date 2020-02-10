@@ -46,14 +46,32 @@ the generation of a class list and an automatic constructor.
 -(NSString *) guid;
 @end
 
+@interface IMHandle: NSObject {}
+@property (nonatomic,retain) NSString * displayName;
+@property (nonatomic,copy) NSString * suggestedName;
+@property (nonatomic,retain,readonly) NSString * name;
+@property (nonatomic,retain,readonly) NSString * fullName;
+@end
+
 @interface IMChat: NSObject {}
 @property (nonatomic,readonly) IMMessage * lastMessage;
+@property (nonatomic,readonly) NSString * guid;
+@property (nonatomic,readonly) NSString * chatIdentifier;
+@property (nonatomic,readonly) NSString * persistentID;
+@property (nonatomic,readonly) NSString * deviceIndependentID;
+@property (nonatomic,retain) NSString * displayName;
+@property (nonatomic,readonly) NSString * roomName;
+@property (nonatomic,retain) IMHandle * recipient;
+@property (nonatomic,readonly) NSArray * participants;
+@property (readonly) unsigned long long hash;
+@property (nonatomic,readonly) NSString * identifier;
 @end
 
 @interface CKConversation: NSObject {}
 -(void) splitLog:(NSString*)logString;
--(void) sendNewMessageToBridge:(NSString *)message;
+-(void) sendNewMessageToBridge:(NSString *)message guid:(NSString *)guid recipientName:(NSString *)name;
 -(void) setLocalUserIsTyping:(BOOL)isTyping;
+-(void) logProperties:(NSObject*)obj;
 @property (retain, nonatomic) IMChat* chat;
 @end
 
@@ -83,11 +101,13 @@ the generation of a class list and an automatic constructor.
 }
 
 %new
--(void)sendNewMessageToBridge:(NSString *)message {
+-(void) sendNewMessageToBridge:(NSString *)message guid:(NSString *)guid recipientName:(NSString *)name {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[NSBundle mainBundle].bundleIdentifier forKey:@"id"];
     [userInfo setObject:@"SpringBoard" forKey:@"type"];
     [userInfo setObject:message forKey:@"message"];
+    if (guid != nil) { [userInfo setObject:guid forKey:@"guid"]; }
+    if (name != nil) { [userInfo setObject:name forKey:@"recipientName"]; }
     [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"messagehook" object:nil userInfo:userInfo];
 }
 
@@ -109,8 +129,67 @@ the generation of a class list and an automatic constructor.
 - (void)_chatItemsDidChange:(id)arg1 {
     %orig;
     NSLog(@"msghk: chat items changed");
-    //NSLog(@"msghk: message: %@", self.chat.lastMessage.text);
-    [self sendNewMessageToBridge:self.chat.lastMessage.text.string];
+
+    // self.chat.lastMessage.guid should give us a GUID for a specific message
+    NSString *s = @"";
+
+    s = [s stringByAppendingString: @" guid: "];
+    s = [s stringByAppendingString: self.chat.guid];
+
+    if (self.chat.persistentID != nil) {
+        s = [s stringByAppendingString: @" persistentID: "];
+        s = [s stringByAppendingString: self.chat.persistentID];
+    }
+
+    if (self.chat.displayName != nil) {
+        s = [s stringByAppendingString: @" displayName: "];
+        s = [s stringByAppendingString: self.chat.displayName];
+    }
+
+    if (self.chat.roomName != nil) {
+        s = [s stringByAppendingString: @" roomName: "];
+        s = [s stringByAppendingString: self.chat.roomName];
+    }
+
+    //if (self.chat.identifier != nil) {
+    //    s = [s stringByAppendingString: @" identifier: "];
+    //    s = [s stringByAppendingString: self.chat.identifier];
+    //}
+
+    if (self.chat.chatIdentifier != nil) {
+        s = [s stringByAppendingString: @" chatIdentifier: "];
+        s = [s stringByAppendingString: self.chat.chatIdentifier];
+    }
+
+    s = [s stringByAppendingString: @" hash: "];
+    s = [s stringByAppendingFormat: @"%lld", self.chat.hash];
+
+    if (self.chat.recipient != nil) {
+        if (self.chat.recipient.name != nil) {
+            s = [s stringByAppendingString: @" recipient.name: "];
+            s = [s stringByAppendingString: self.chat.recipient.name];
+        }
+    }
+
+    //for (IMHandle *p in self.chat.participants) {
+        //s = [s stringByAppendingString: @" participant: "];
+        //s = [s stringByAppendingString: p.description];
+        //if (p.suggestedName != nil) {
+        //    s = [s stringByAppendingString: @" suggestedName: "];
+        //    s = [s stringByAppendingString: p.suggestedName];
+        //}
+        //if (p.name != nil) {
+        //    s = [s stringByAppendingString: @" name: "];
+        //    s = [s stringByAppendingString: p.name];
+        //}
+    //}
+
+    //if (self.chat.participants != nil) {
+    //    s = [s stringByAppendingString: @" participants: "];
+    //    s = [s stringByAppendingString: self.chat.participants.description];
+    //}
+
+    [self sendNewMessageToBridge:self.chat.lastMessage.text.string guid: self.chat.guid recipientName: self.chat.recipient.name];
 }
 
 - (void)_chatPropertiesChanged:(id)arg1 {
