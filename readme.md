@@ -10,6 +10,6 @@ This project hasn't yet been packaged for easy installation. Coming soon!
 Development
 -----------
 
-[feature roadmap](roadmap)  
+[feature roadmap](roadmap.md)  
 
-[to do list](todo)
+[to do list](todo.md)
