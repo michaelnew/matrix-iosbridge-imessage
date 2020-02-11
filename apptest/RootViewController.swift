@@ -16,7 +16,7 @@ class RootViewController: UITableViewController {
         let center = NSDistributedNotificationCenter.default!
         let mainQueue = OperationQueue.main
         center.addObserver(forName: NSNotification.Name("messagehook"), object: nil, queue: mainQueue) { (note) in
-            NSLog("MBR: got notification")
+            log("got notification")
             let message = note.userInfo?["message"] as? String ?? "no message"
             let guid = note.userInfo?["guid"] as? String ?? "guid not found"
             let name = note.userInfo?["recipientName"] as? String ?? "recipient unkown"
@@ -27,13 +27,14 @@ class RootViewController: UITableViewController {
 
         _ = MatrixHandler.getHomeserverURL(from: "@mike_new:mikenew.io", completion: { url in
             if let url = url {
-                NSLog("MBR: url: " + url)
+                log("url: " + url)
             } else {
-                NSLog("MBR: could't get matrix server URL")
+                log("could't get matrix server client URL")
             }
         })
     }
 
+    // TODO: move all of this into the MatrixHandler class and clean it up
     var matrixClient: MXRestClient?
 
     func testMatrix() {
@@ -49,7 +50,7 @@ class RootViewController: UITableViewController {
         self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
 
         guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {
-            NSLog("MBR: couldn't create matrix session")
+            log("couldn't create matrix session")
             return
         }
 
@@ -58,13 +59,13 @@ class RootViewController: UITableViewController {
 
             // mxSession is ready to be used
             // now wer can get all rooms with:
-            NSLog("MBR: \(mxSession.rooms)")
+            log("\(mxSession.rooms)")
         }
     }
 
     func send(message: String) {
         self.matrixClient?.sendTextMessage(toRoom: "!lzoKElzYKTdgaONpcI:mikenew.io", text: message, completion: { (response) in
-            NSLog("MBR: sent message hopefully")
+            log("sent message hopefully")
         })
     }
 
