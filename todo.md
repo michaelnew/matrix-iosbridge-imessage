@@ -1,4 +1,4 @@
-This is a techincal to-do list. For a more user-centric feature roadmap, see [roadmap](roadmap).
+This is a techincal to-do list. For a more user-centric feature roadmap, see [roadmap](roadmap.md).
 
 * [ ] Rename the project to something more sensible than "apptest"
 * [ ] package the app as a .deb file and make it installable for an end user
@@ -6,7 +6,7 @@ This is a techincal to-do list. For a more user-centric feature roadmap, see [ro
 * [ ] Move Matrix-specific code into it's own file so it's somewhat isolated from the rest of the project
 * [ ] Account sign-in (as a basic bot)
   * [ ] Bot username / password
-    * [ ] Infer matrix server from bot username (can this be done consistently? Look into .well-known)
+    * [x] Infer matrix server from bot username (can this be done consistently? Look into .well-known)
     * [ ] Get a token using the username/password and store it
-  * [ ] User's username
+  * [ ] User's username (is it possible to check that a given username exists?)
 * [ ] UI for account sign in (as an Appservice)
