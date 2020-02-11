@@ -11,13 +11,12 @@ class RootViewController: UITableViewController {
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
-        title = "Messages"
+        self.title = "Messages"
 
-        NSLog("msghk: Connecting to notification center")
         let center = NSDistributedNotificationCenter.default!
         let mainQueue = OperationQueue.main
         center.addObserver(forName: NSNotification.Name("messagehook"), object: nil, queue: mainQueue) { (note) in
-            NSLog("msghk: got notification")
+            NSLog("MBR: got notification")
             let message = note.userInfo?["message"] as? String ?? "no message"
             let guid = note.userInfo?["guid"] as? String ?? "guid not found"
             let name = note.userInfo?["recipientName"] as? String ?? "recipient unkown"
@@ -26,7 +25,13 @@ class RootViewController: UITableViewController {
             self.send(message: "\(name): " + message + " (guid: \(guid))")
         }
 
-        self.testMatrix()
+        _ = MatrixHandler.getHomeserverURL(from: "@mike_new:mikenew.io", completion: { url in
+            if let url = url {
+                NSLog("MBR: url: " + url)
+            } else {
+                NSLog("MBR: could't get matrix server URL")
+            }
+        })
     }
 
     var matrixClient: MXRestClient?
@@ -44,7 +49,7 @@ class RootViewController: UITableViewController {
         self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
 
         guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {
-            NSLog("couldn't create matrix session")
+            NSLog("MBR: couldn't create matrix session")
             return
         }
 
@@ -53,13 +58,13 @@ class RootViewController: UITableViewController {
 
             // mxSession is ready to be used
             // now wer can get all rooms with:
-            NSLog("\(mxSession.rooms)")
+            NSLog("MBR: \(mxSession.rooms)")
         }
     }
 
     func send(message: String) {
         self.matrixClient?.sendTextMessage(toRoom: "!lzoKElzYKTdgaONpcI:mikenew.io", text: message, completion: { (response) in
-            NSLog("sent message hopefully")
+            NSLog("MBR: sent message hopefully")
         })
     }
 
