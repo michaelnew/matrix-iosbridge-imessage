@@ -1,7 +1,7 @@
 # Features & roadmap
 * Matrix → iMessage
   * [ ] Message content
-    * [ ] Plain text
+    * [x] Plain text
     * [ ] Formatted messages
     * [ ] Media/files
     * [ ] Replies
