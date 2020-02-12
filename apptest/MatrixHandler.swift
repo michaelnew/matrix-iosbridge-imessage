@@ -5,6 +5,12 @@ class MatrixHandler {
 
     static func getHomeserverURL(from username: String, completion: @escaping (String?) -> ()) {
 
+
+        // use this maybe?
+        //- (MXHTTPOperation*)wellKnow:(void (^)(MXWellKnown *wellKnown))success
+        //             failure:(void (^)(NSError *error))failure;
+
+
         // Split the username apart and grab the domain
         var domain: String?
         var parts = username.components(separatedBy: ":")
@@ -41,8 +47,25 @@ class MatrixHandler {
     // TODO: move all of this into the MatrixHandler class and clean it up
     private var matrixClient: MXRestClient?
 
-    func getMatrixToken(userId: String, password: String, completion: @escaping (String?) -> ()) {
-        // TODO: how do we do a password login?
+    func checkMatrixIdIsInUse(userId: String) {
+    //- (MXHTTPOperation*)isUserNameInUse:(NSString*)username
+    //                           callback:(void (^)(BOOL isUserNameInUse))callback NS_REFINED_FOR_SWIFT;
+    }
+
+    func getToken(userId: String, password: String, homeServerUrl: String){
+        let url = URL(string: homeServerUrl)!
+        self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
+        self.matrixClient!.login(username: userId, password: password, completion: { (response) in
+            switch response {
+            case .success(let credentials):
+                log("token:  " + (credentials.accessToken ?? ""))
+                break
+            case .failure(let error):
+                // Handle the error in some way
+                log("error logging in: " + error.localizedDescription)
+                break
+            }
+        })
     }
 
     func loginToMatrix(userId: String, token: String, homeServerUrl: String) {
@@ -50,6 +73,7 @@ class MatrixHandler {
                                 userId: userId,
                                 accessToken:token)
 
+        // start client earlier
         self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
 
         guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {

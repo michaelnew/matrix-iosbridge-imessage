@@ -26,16 +26,21 @@ class RootViewController: UITableViewController {
             self.matrixHandler.send(message: "\(name): " + message + " (guid: \(guid))")
         }
 
+        let userId = "@iosmessagebot:mikenew.io"
+        let password = "..."
+
         // Does this need to be static?
-        _ = MatrixHandler.getHomeserverURL(from: "@mike_new:mikenew.io", completion: { url in
+        _ = MatrixHandler.getHomeserverURL(from: userId, completion: { url in
             if let url = url {
                 log("url: " + url)
+                self.matrixHandler.getToken(userId: userId, password: password, homeServerUrl: url)
+                // TODO: store credentials if we get a successful login
             } else {
                 log("could't get matrix server client URL")
             }
         })
 
-        self.attemptMatrixLoginWithStoredCredentials()
+        //self.attemptMatrixLoginWithStoredCredentials()
     }
 
     func attemptMatrixLoginWithStoredCredentials() {

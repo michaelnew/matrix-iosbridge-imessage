@@ -10,3 +10,4 @@ This is a techincal to-do list. For a more user-centric feature roadmap, see [ro
     * [ ] Get a token using the username/password and store it
   * [ ] User's username (is it possible to check that a given username exists?)
 * [ ] UI for account sign in (as an Appservice)
+      Show a "searching for matrix server" message after a user ID is entered
