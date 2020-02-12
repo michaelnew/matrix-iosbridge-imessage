@@ -37,4 +37,42 @@ class MatrixHandler {
             task.resume()
         }
     }
+
+    // TODO: move all of this into the MatrixHandler class and clean it up
+    private var matrixClient: MXRestClient?
+
+    func getMatrixToken(userId: String, password: String, completion: @escaping (String?) -> ()) {
+        // TODO: how do we do a password login?
+    }
+
+    func loginToMatrix(userId: String, token: String, homeServerUrl: String) {
+        let credentials = MXCredentials(homeServer: homeServerUrl,
+                                userId: userId,
+                                accessToken:token)
+
+        self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
+
+        guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {
+            log("couldn't create matrix session")
+            return
+        }
+
+        mxSession.start { response in
+            guard response.isSuccess else { return }
+
+            // mxSession is ready to be used
+            // now wer can get all rooms with:
+            log("\(mxSession.rooms)")
+        }
+    }
+
+    func send(message: String) {
+        if let m = self.matrixClient {
+            m.sendTextMessage(toRoom: "!lzoKElzYKTdgaONpcI:mikenew.io", text: message, completion: { (response) in
+                log("sent message to matrix")
+            })
+        } else {
+            log("No active matrix client. Can't send message")
+        }
+    }
 }

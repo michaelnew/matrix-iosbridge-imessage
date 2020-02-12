@@ -5,6 +5,7 @@ import SwiftMatrixSDK
 class RootViewController: UITableViewController {
 
     var objects: [String] = []
+    var matrixHandler = MatrixHandler()
 
     override func loadView() {
         super.loadView()
@@ -20,11 +21,12 @@ class RootViewController: UITableViewController {
             let message = note.userInfo?["message"] as? String ?? "no message"
             let guid = note.userInfo?["guid"] as? String ?? "guid not found"
             let name = note.userInfo?["recipientName"] as? String ?? "recipient unkown"
-            self.objects.insert(message, at: 0)
+            self.objects.insert(message + " (" + name + ")", at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-            self.send(message: "\(name): " + message + " (guid: \(guid))")
+            self.matrixHandler.send(message: "\(name): " + message + " (guid: \(guid))")
         }
 
+        // Does this need to be static?
         _ = MatrixHandler.getHomeserverURL(from: "@mike_new:mikenew.io", completion: { url in
             if let url = url {
                 log("url: " + url)
@@ -32,41 +34,20 @@ class RootViewController: UITableViewController {
                 log("could't get matrix server client URL")
             }
         })
+
+        self.attemptMatrixLoginWithStoredCredentials()
     }
 
-    // TODO: move all of this into the MatrixHandler class and clean it up
-    var matrixClient: MXRestClient?
-
-    func testMatrix() {
-        // Load settings from user defaults
+    func attemptMatrixLoginWithStoredCredentials() {
         guard let token = UserDefaults.standard.string(forKey: "matrixAccessToken") else { return }
         guard let userId = UserDefaults.standard.string(forKey: "matrixBotUserId") else { return }
         guard let homeServerUrl = UserDefaults.standard.string(forKey: "matrixHomeServerUrl") else { return }
 
-        let credentials = MXCredentials(homeServer: homeServerUrl,
-                                userId: userId,
-                                accessToken:token )
+        // probably shouldn't store the password. Just store the token after login.
+        // Could also maybe store the token in keychain rather than in user defaults
+        //guard let password = UserDefaults.standard.string(forKey: "matrixBotPassword") else { return }
 
-        self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
-
-        guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {
-            log("couldn't create matrix session")
-            return
-        }
-
-        mxSession.start { response in
-            guard response.isSuccess else { return }
-
-            // mxSession is ready to be used
-            // now wer can get all rooms with:
-            log("\(mxSession.rooms)")
-        }
-    }
-
-    func send(message: String) {
-        self.matrixClient?.sendTextMessage(toRoom: "!lzoKElzYKTdgaONpcI:mikenew.io", text: message, completion: { (response) in
-            log("sent message hopefully")
-        })
+        self.matrixHandler.loginToMatrix(userId: userId, token: token, homeServerUrl: homeServerUrl)
     }
 
     // MARK: - Table View Data Source
