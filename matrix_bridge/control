@@ -1,8 +1,8 @@
-Package: com.mikenew.apptest
-Name: apptest
+Package: com.mikenew.matrixbridge
+Name: matrixbridge
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: An awesome application!
+Description: Connect your iMessage account to the Matrix chat network
 Maintainer: Michael New
 Author: Michael New
 Section: Utilities
