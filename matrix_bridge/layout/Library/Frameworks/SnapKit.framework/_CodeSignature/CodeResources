@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/SnapKit-Swift.h</key>
 		<data>
-		kYiyzjfQyOel13dmh/FMuPu07jk=
+		p+t3oaA+CQfZTLmE3J8AVA0anwE=
 		</data>
 		<key>Headers/SnapKit-umbrella.h</key>
 		<data>
@@ -14,23 +14,39 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		kLKYvBB+7AN73Sc+NPNApSuVP5M=
+		4lyo+kuX7tHN5h3FOIVcEdUK4R8=
+		</data>
+		<key>Modules/SnapKit.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
+		<data>
+		pEnc+y3Z0OPMclLkbgB70opvjdE=
+		</data>
+		<key>Modules/SnapKit.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
+		<data>
+		A5OtsgaghkJPHuf6joBWlNPYMnA=
 		</data>
 		<key>Modules/SnapKit.swiftmodule/i386.swiftdoc</key>
 		<data>
-		oAidXeaQKf6zD3qEzE/Ewu/DbII=
+		pEnc+y3Z0OPMclLkbgB70opvjdE=
 		</data>
 		<key>Modules/SnapKit.swiftmodule/i386.swiftmodule</key>
 		<data>
-		nvOMn4p+Jc2aJIysmQtdwvh+nAI=
+		A5OtsgaghkJPHuf6joBWlNPYMnA=
+		</data>
+		<key>Modules/SnapKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
+		<data>
+		2fydiRVu5iSILY/XpzbaRPXYdk4=
+		</data>
+		<key>Modules/SnapKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
+		<data>
+		r6WIzOz72EYt/UOamyp6yr6hM+I=
 		</data>
 		<key>Modules/SnapKit.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		Km5eip0An2Ja1yEQNPSSV5mm/MM=
+		2fydiRVu5iSILY/XpzbaRPXYdk4=
 		</data>
 		<key>Modules/SnapKit.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		oNze8Rbz6aNqfXbuVuHU95gESAk=
+		r6WIzOz72EYt/UOamyp6yr6hM+I=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -43,11 +59,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			kYiyzjfQyOel13dmh/FMuPu07jk=
+			p+t3oaA+CQfZTLmE3J8AVA0anwE=
 			</data>
 			<key>hash2</key>
 			<data>
-			9ip1k9kP5BEEc1xVeTTDz5tm3AffrnU+gZ761jh7ngY=
+			m00eaWQoQjpZkgrWQfytWeUtzf4yhoVtL/v3cu++E1w=
 			</data>
 		</dict>
 		<key>Headers/SnapKit-umbrella.h</key>
@@ -61,48 +77,92 @@
 			C5vjdOC5BauYaGoevw23S10YBRaTd+PJnEqyIGt2LG8=
 			</data>
 		</dict>
+		<key>Modules/SnapKit.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pEnc+y3Z0OPMclLkbgB70opvjdE=
+			</data>
+			<key>hash2</key>
+			<data>
+			mddvLOK7UvfS3z2aTPvaE4zDg6OUM0JT4Kgk+ZWWlzU=
+			</data>
+		</dict>
+		<key>Modules/SnapKit.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			A5OtsgaghkJPHuf6joBWlNPYMnA=
+			</data>
+			<key>hash2</key>
+			<data>
+			RoEaZwMhx483HHfhtxjfPsH5LqqhNyVLJNu07iqJz1c=
+			</data>
+		</dict>
 		<key>Modules/SnapKit.swiftmodule/i386.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			oAidXeaQKf6zD3qEzE/Ewu/DbII=
+			pEnc+y3Z0OPMclLkbgB70opvjdE=
 			</data>
 			<key>hash2</key>
 			<data>
-			IJBJX25kt1OmM0f9qRSIjBWOZVkpjhphtHmaRjSYjLo=
+			mddvLOK7UvfS3z2aTPvaE4zDg6OUM0JT4Kgk+ZWWlzU=
 			</data>
 		</dict>
 		<key>Modules/SnapKit.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nvOMn4p+Jc2aJIysmQtdwvh+nAI=
+			A5OtsgaghkJPHuf6joBWlNPYMnA=
 			</data>
 			<key>hash2</key>
 			<data>
-			VA5EoTnZAXDg1i0QAohSHTWURSbnMUwdtBKQwesQ+pI=
+			RoEaZwMhx483HHfhtxjfPsH5LqqhNyVLJNu07iqJz1c=
+			</data>
+		</dict>
+		<key>Modules/SnapKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2fydiRVu5iSILY/XpzbaRPXYdk4=
+			</data>
+			<key>hash2</key>
+			<data>
+			OyKN27BoLT69q53GgVxkDyI0f/HimGPgXYw1DmlkpQ4=
+			</data>
+		</dict>
+		<key>Modules/SnapKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			r6WIzOz72EYt/UOamyp6yr6hM+I=
+			</data>
+			<key>hash2</key>
+			<data>
+			dlLSl63IQDJZk+wfsQy2bvSI9tkzcCG9ein9mN9b71c=
 			</data>
 		</dict>
 		<key>Modules/SnapKit.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Km5eip0An2Ja1yEQNPSSV5mm/MM=
+			2fydiRVu5iSILY/XpzbaRPXYdk4=
 			</data>
 			<key>hash2</key>
 			<data>
-			fBDpH97wbxhj8ym8FJ58uArtp4GMDu5vCV+SbKnzmQc=
+			OyKN27BoLT69q53GgVxkDyI0f/HimGPgXYw1DmlkpQ4=
 			</data>
 		</dict>
 		<key>Modules/SnapKit.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			oNze8Rbz6aNqfXbuVuHU95gESAk=
+			r6WIzOz72EYt/UOamyp6yr6hM+I=
 			</data>
 			<key>hash2</key>
 			<data>
-			J5hB1brFX1UEIBfawbLB0vIVr0OIsZWq9dzG3ESNwGs=
+			dlLSl63IQDJZk+wfsQy2bvSI9tkzcCG9ein9mN9b71c=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -24,7 +24,7 @@ PODS:
   - Realm (3.17.3):
     - Realm/Headers (= 3.17.3)
   - Realm/Headers (3.17.3)
-  - SnapKit (4.2.0)
+  - SnapKit (4.0.1)
   - SwiftMatrixSDK (0.15.2):
     - AFNetworking (~> 3.2.0)
     - GZIP (~> 1.2.2)
@@ -33,7 +33,7 @@ PODS:
     - Realm (~> 3.17.3)
 
 DEPENDENCIES:
-  - SnapKit (~> 4.2.0)
+  - SnapKit (~> 4.0.0)
   - SwiftMatrixSDK (from `https://github.com/michaelnew/matrix-ios-sdk`, branch `develop`)
 
 SPEC REPOS:
@@ -61,9 +61,9 @@ SPEC CHECKSUMS:
   libbase58: 7c040313537b8c44b6e2d15586af8e21f7354efd
   OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
   Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
-  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SwiftMatrixSDK: c10f13c0e1aeff1b9670515602bcb3b89317198f
 
-PODFILE CHECKSUM: 755b927dc0a6f0fc94a659e0d9a3ad0bd7ccb6d8
+PODFILE CHECKSUM: 69b6a8189235fdb93d8cc49232373251c22f3e68
 
 COCOAPODS: 1.8.4

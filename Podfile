@@ -3,7 +3,7 @@ platform :ios, '8.0'
 plugin 'cocoapods-rome', { :pre_compile => Proc.new { |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '4.2'
+            config.build_settings['SWIFT_VERSION'] = '4.0'
         end
     end
 
@@ -16,5 +16,5 @@ plugin 'cocoapods-rome', { :pre_compile => Proc.new { |installer|
 
 target 'caesar' do
   pod 'SwiftMatrixSDK', :git => 'https://github.com/michaelnew/matrix-ios-sdk', :branch => 'develop'
-  pod 'SnapKit', '~> 4.2.0'
+  pod 'SnapKit', '~> 4.0.0'
 end
