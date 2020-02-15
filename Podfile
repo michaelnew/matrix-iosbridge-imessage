@@ -16,4 +16,5 @@ plugin 'cocoapods-rome', { :pre_compile => Proc.new { |installer|
 
 target 'caesar' do
   pod 'SwiftMatrixSDK', :git => 'https://github.com/matrix-org/matrix-ios-sdk', :branch => 'develop'
+  pod 'SnapKit', '~> 4.0.1'
 end
