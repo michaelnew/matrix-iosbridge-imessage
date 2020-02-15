@@ -9,6 +9,10 @@ This is a techincal to-do list. For a more user-centric feature roadmap, see [ro
     * [x] Infer matrix server from bot username (can this be done consistently? Look into .well-known)
     * [ ] Get a token using the username/password and store it
   * [ ] User's username (is it possible to check that a given username exists?)
-* [ ] UI for account sign in (as an Appservice)
+
+UI Design
+---------
+* [ ] Compile SnapKit with Swift 4.2
+* [ ] account sign in (as an Appservice)
       Show a "searching for matrix server" message after a user ID is entered
   * sign in screen: [mockup 1](./design/mockup1.png) [mockup 2](./design/mockup2.png)

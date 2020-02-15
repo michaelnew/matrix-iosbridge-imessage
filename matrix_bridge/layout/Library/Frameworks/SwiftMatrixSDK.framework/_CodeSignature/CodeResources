@@ -36,6 +36,10 @@
 		<data>
 		pkLOl7naIUFWQFXcrtPrL66WH3U=
 		</data>
+		<key>Headers/MXAggregationPaginatedResponse_Private.h</key>
+		<data>
+		jGLLCcM/GNpUYaOYiQyJ7TaRfo0=
+		</data>
 		<key>Headers/MXAggregations.h</key>
 		<data>
 		AbOeOzt/4W4unYbegpo1jswZLPg=
@@ -146,7 +150,7 @@
 		</data>
 		<key>Headers/MXCrypto.h</key>
 		<data>
-		QkltsPXe6jPdSLvSqEn02kyZClA=
+		zzNGEfL/YSePpsMhenXUHLdpBBU=
 		</data>
 		<key>Headers/MXCryptoAlgorithms.h</key>
 		<data>
@@ -166,7 +170,7 @@
 		</data>
 		<key>Headers/MXCrypto_Private.h</key>
 		<data>
-		QXKEMqgr7Ob+rj640pfeUBUFLpo=
+		AoAJwaC5ov8dsf1AC8VWr00PYQ4=
 		</data>
 		<key>Headers/MXDecrypting.h</key>
 		<data>
@@ -200,22 +204,6 @@
 		<data>
 		d5BZjPZS0GEChX+SVkLMZROR/1Y=
 		</data>
-		<key>Headers/MXDeviceVerificationManager.h</key>
-		<data>
-		3vWB3il1+0TQRwd/58bIaozsf0E=
-		</data>
-		<key>Headers/MXDeviceVerificationManager_Private.h</key>
-		<data>
-		L3We1UpPKi6U62EF92wZt115Hi0=
-		</data>
-		<key>Headers/MXDeviceVerificationTransaction.h</key>
-		<data>
-		Y/QFj+ytgVRimoVib2q0qFcRD0s=
-		</data>
-		<key>Headers/MXDeviceVerificationTransaction_Private.h</key>
-		<data>
-		R27A+yvIAqsN2HkaClRUxhZy5h4=
-		</data>
 		<key>Headers/MXDiscoveredClientConfig.h</key>
 		<data>
 		DL0ryRKwrs4Tu6vYWSUJU7EHo7s=
@@ -238,7 +226,7 @@
 		</data>
 		<key>Headers/MXEncrypting.h</key>
 		<data>
-		4IWmKYje8LuNCVivzrKGuTsL+84=
+		rdRNbCf47wqZbzT2UsqJmUX6Gl4=
 		</data>
 		<key>Headers/MXEnumConstants.h</key>
 		<data>
@@ -250,7 +238,7 @@
 		</data>
 		<key>Headers/MXEvent.h</key>
 		<data>
-		sN4Sr0FfNKsMzW7+4xK95iaiKMY=
+		KIqDVrIt9hvpk2Np3Bj6w3wpM4E=
 		</data>
 		<key>Headers/MXEventAnnotation.h</key>
 		<data>
@@ -402,7 +390,7 @@
 		</data>
 		<key>Headers/MXJSONModels.h</key>
 		<data>
-		8DJKpajfkza7qNbAs37528Mhv6s=
+		+kT9oeNbqikj0NujJiKCZsKxrtw=
 		</data>
 		<key>Headers/MXKey.h</key>
 		<data>
@@ -434,7 +422,7 @@
 		</data>
 		<key>Headers/MXKeyVerification.h</key>
 		<data>
-		yDd5FZpoB8a5+e8wG3rxEpM+ZQg=
+		aS6g4dqfRf/vg4rdeRN0HBo+sHc=
 		</data>
 		<key>Headers/MXKeyVerificationAccept.h</key>
 		<data>
@@ -442,7 +430,7 @@
 		</data>
 		<key>Headers/MXKeyVerificationByDMRequest.h</key>
 		<data>
-		toplp94wxm3UhHCKp0WJaHaQaYY=
+		aafN5vbjG9+6a7Xb8wDVnuhi9Yc=
 		</data>
 		<key>Headers/MXKeyVerificationCancel.h</key>
 		<data>
@@ -464,9 +452,21 @@
 		<data>
 		TJ03w0PomgBY1cC1jUh6hpM8CCM=
 		</data>
+		<key>Headers/MXKeyVerificationManager.h</key>
+		<data>
+		lPjshLYQa8mGkR724nV8RiqJDIU=
+		</data>
+		<key>Headers/MXKeyVerificationManager_Private.h</key>
+		<data>
+		qn0deFjFgcSjy77bvhBk2prSW+8=
+		</data>
+		<key>Headers/MXKeyVerificationReady.h</key>
+		<data>
+		2xtGVmdBUbdfz7+F4zd3eKmDfrg=
+		</data>
 		<key>Headers/MXKeyVerificationRequest.h</key>
 		<data>
-		wpM1TIXOrRQAQtSTRxLExiQr+N0=
+		E8d8s1CmhQLhVEMh06kxXvVAREI=
 		</data>
 		<key>Headers/MXKeyVerificationRequestJSONModel.h</key>
 		<data>
@@ -474,7 +474,7 @@
 		</data>
 		<key>Headers/MXKeyVerificationRequest_Private.h</key>
 		<data>
-		QqatUB9g7+JmivfjlIqquYnCvOw=
+		a2bLB8mMLaTRy+pkGw3wmRvqNjE=
 		</data>
 		<key>Headers/MXKeyVerificationStart.h</key>
 		<data>
@@ -482,7 +482,15 @@
 		</data>
 		<key>Headers/MXKeyVerificationStatusResolver.h</key>
 		<data>
-		zImuWFFkHVKh22jyJPAAcqBYriI=
+		ayoanTM49qYq8i0Qo3nP5PWaBIo=
+		</data>
+		<key>Headers/MXKeyVerificationTransaction.h</key>
+		<data>
+		LUQIzbo61RsLzsVjgr9KgN2HyQE=
+		</data>
+		<key>Headers/MXKeyVerificationTransaction_Private.h</key>
+		<data>
+		w047KkDhi2OAWmnGrTqcTNin/1w=
 		</data>
 		<key>Headers/MXLRUCache.h</key>
 		<data>
@@ -554,7 +562,7 @@
 		</data>
 		<key>Headers/MXMemoryRoomStore.h</key>
 		<data>
-		1MHf8iIrfzWYL01mYO1nivCHbDQ=
+		IhUuWmXPxZJ6N6IJ8O9ZQr24UaE=
 		</data>
 		<key>Headers/MXMemoryStore.h</key>
 		<data>
@@ -578,7 +586,7 @@
 		</data>
 		<key>Headers/MXOlmDevice.h</key>
 		<data>
-		AEyBVNoYRFYyTD0T34XusvgzEJU=
+		FPhj54ofy7SM19sJKINWyiA6iZQ=
 		</data>
 		<key>Headers/MXOlmEncryption.h</key>
 		<data>
@@ -822,11 +830,11 @@
 		</data>
 		<key>Headers/MXSASTransaction.h</key>
 		<data>
-		/352XwyTG4TVbTWljlpjrgKjh/8=
+		5SFmV682yrDC19jGj4VeTLe3Y2c=
 		</data>
 		<key>Headers/MXSASTransaction_Private.h</key>
 		<data>
-		MPD9MFn3urSuUwehX4VpKF6BehM=
+		LRl3Un+ASqzPFCCGpUIRQns1u+k=
 		</data>
 		<key>Headers/MXSDKOptions.h</key>
 		<data>
@@ -882,7 +890,7 @@
 		</data>
 		<key>Headers/MXStore.h</key>
 		<data>
-		lFlCo4peaA6rg+mGBvu5za37DLQ=
+		CpdFFZSR153kDzpGitj3K9bLR14=
 		</data>
 		<key>Headers/MXTools.h</key>
 		<data>
@@ -946,11 +954,11 @@
 		</data>
 		<key>Headers/SwiftMatrixSDK-Swift.h</key>
 		<data>
-		aQ9dIwOEzX+fCIfKmnlcPIfJREE=
+		2Du9YhHFqJdp2z+r8vwSDiUqDAI=
 		</data>
 		<key>Headers/SwiftMatrixSDK-umbrella.h</key>
 		<data>
-		3MXm100ZQBhnHAFWUOVtwR6Jfws=
+		9lxiCu6n+mwhBZsvu/Ybz6LjHe4=
 		</data>
 		<key>Headers/SwiftMatrixSDK.h</key>
 		<data>
@@ -958,23 +966,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		0AUlsN+3CeDAT0XqLsIzFmB6Vjg=
+		LxYNrHwSJRrOowxzZ4n9S8dNjS4=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/i386.swiftdoc</key>
 		<data>
-		QHl7wrxzNzHuHA24+Obr8sX7m+8=
+		pPuBl6PNGY6P++IuGUJhGubRfYE=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/i386.swiftmodule</key>
 		<data>
-		wbHIJz5ZJrXLjOeRA6OhYASBEAQ=
+		jk6070IVPCh37T+9wHvwESQe63U=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		7GEig312HIxD1GJvPraVAcN5wJc=
+		OJz1Xg6H6avuc465Rk3b2V7K8Q8=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		5sB8h7tEXZgy0IMgi7ev47KydJE=
+		LEG4CBSu1TvP0nQVVzmCFRhL6B8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -1069,6 +1077,17 @@
 			<key>hash2</key>
 			<data>
 			B86Ih17U0oRmv3+hERVyJN05ivQmhvzJahr/24E+oS4=
+			</data>
+		</dict>
+		<key>Headers/MXAggregationPaginatedResponse_Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			jGLLCcM/GNpUYaOYiQyJ7TaRfo0=
+			</data>
+			<key>hash2</key>
+			<data>
+			SnvBB8Mbs0PTiGAJAgnmGL/GXrDKd+I050qrGdISkF4=
 			</data>
 		</dict>
 		<key>Headers/MXAggregations.h</key>
@@ -1372,11 +1391,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QkltsPXe6jPdSLvSqEn02kyZClA=
+			zzNGEfL/YSePpsMhenXUHLdpBBU=
 			</data>
 			<key>hash2</key>
 			<data>
-			Z6sx+2HD1ljIPmXjzpNjD37cSDwpqAVb9ERkIj9RfZg=
+			zolk+RvnkOUsRmRmse7f2p+Z4IKATiJUxhbO+qesvyk=
 			</data>
 		</dict>
 		<key>Headers/MXCryptoAlgorithms.h</key>
@@ -1427,11 +1446,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QXKEMqgr7Ob+rj640pfeUBUFLpo=
+			AoAJwaC5ov8dsf1AC8VWr00PYQ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			4G90vlsZnCPab71NZpMPf++kWQ3Sbx3bnDmAQvwNmyI=
+			yJPsgCaqinmvHR8mQe2c6ATWQ7v02DFgjnMAzBAZOuI=
 			</data>
 		</dict>
 		<key>Headers/MXDecrypting.h</key>
@@ -1522,50 +1541,6 @@
 			HihsNXY7rJGN+6enfsEeZo71XjWhrr32Jhx3Bx5WVvM=
 			</data>
 		</dict>
-		<key>Headers/MXDeviceVerificationManager.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			3vWB3il1+0TQRwd/58bIaozsf0E=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZLuK4qcKVJO4pg7Ce0csG5zYjth33qGZguocVjcYkws=
-			</data>
-		</dict>
-		<key>Headers/MXDeviceVerificationManager_Private.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			L3We1UpPKi6U62EF92wZt115Hi0=
-			</data>
-			<key>hash2</key>
-			<data>
-			X/8Cx88sF4xRu4MnWQbZ35mEuKhl7gFf/HH4PYrC/DM=
-			</data>
-		</dict>
-		<key>Headers/MXDeviceVerificationTransaction.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Y/QFj+ytgVRimoVib2q0qFcRD0s=
-			</data>
-			<key>hash2</key>
-			<data>
-			cQBPEDNsA7hv3DHX6X1eGRP6sTeiIsn7DULUpONxSuY=
-			</data>
-		</dict>
-		<key>Headers/MXDeviceVerificationTransaction_Private.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			R27A+yvIAqsN2HkaClRUxhZy5h4=
-			</data>
-			<key>hash2</key>
-			<data>
-			CQ8yJF5ZadfSwRS9Uj4qGLsShrrlHG20PQ+cdZ9gznc=
-			</data>
-		</dict>
 		<key>Headers/MXDiscoveredClientConfig.h</key>
 		<dict>
 			<key>hash</key>
@@ -1625,11 +1600,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4IWmKYje8LuNCVivzrKGuTsL+84=
+			rdRNbCf47wqZbzT2UsqJmUX6Gl4=
 			</data>
 			<key>hash2</key>
 			<data>
-			BkvTAvcybvjzkOEWdylfMioevq+8fG/zUWfDsLp+ON4=
+			maqjx1/DllHPCMwWdZcvUvf7Ks03NCo4cUC6qs0a/qo=
 			</data>
 		</dict>
 		<key>Headers/MXEnumConstants.h</key>
@@ -1658,11 +1633,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			sN4Sr0FfNKsMzW7+4xK95iaiKMY=
+			KIqDVrIt9hvpk2Np3Bj6w3wpM4E=
 			</data>
 			<key>hash2</key>
 			<data>
-			7eKiQ0opUXfaApnzaQtluRaEz8jQO9k8YBT/wYtzetA=
+			qHN/I8gdGXWH9TJEjxfyvN9GmiAUH7gRbcBY+iMo6c8=
 			</data>
 		</dict>
 		<key>Headers/MXEventAnnotation.h</key>
@@ -2076,11 +2051,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			8DJKpajfkza7qNbAs37528Mhv6s=
+			+kT9oeNbqikj0NujJiKCZsKxrtw=
 			</data>
 			<key>hash2</key>
 			<data>
-			934rtfCXO2kl0r7aCBmtzJZ2I96/7c+9P+AOkxKE+2c=
+			q5c13zaXPBWLkS3cWkBa2QO4eJqDcWzWhMQ/NfnCMo0=
 			</data>
 		</dict>
 		<key>Headers/MXKey.h</key>
@@ -2164,11 +2139,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yDd5FZpoB8a5+e8wG3rxEpM+ZQg=
+			aS6g4dqfRf/vg4rdeRN0HBo+sHc=
 			</data>
 			<key>hash2</key>
 			<data>
-			dPP5CM1OXyjeR+9y89mZAAjtJoPurTSKyglNhFTTqDw=
+			DjaWcyIr9U4AtTNSo/4EK5C1Zk1uuyKoDzNdt78LNhA=
 			</data>
 		</dict>
 		<key>Headers/MXKeyVerificationAccept.h</key>
@@ -2186,11 +2161,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			toplp94wxm3UhHCKp0WJaHaQaYY=
+			aafN5vbjG9+6a7Xb8wDVnuhi9Yc=
 			</data>
 			<key>hash2</key>
 			<data>
-			KwypbYl+GXAW6KJDB+0vTZRDHKdEOLzm6WKv0CoKCvE=
+			rjbhmy9tbR6KYzwWNekWyAKPU5yCKTh0BZQMtEZen1g=
 			</data>
 		</dict>
 		<key>Headers/MXKeyVerificationCancel.h</key>
@@ -2248,15 +2223,48 @@
 			Nusn348RiZJRbEakvGRgp+cnPQvT99r0OoNOnBhTvrI=
 			</data>
 		</dict>
+		<key>Headers/MXKeyVerificationManager.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			lPjshLYQa8mGkR724nV8RiqJDIU=
+			</data>
+			<key>hash2</key>
+			<data>
+			OU6gDpO3nSLeQhhk1cpCZD4i3plxR2PFd6kD+xuHGVg=
+			</data>
+		</dict>
+		<key>Headers/MXKeyVerificationManager_Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			qn0deFjFgcSjy77bvhBk2prSW+8=
+			</data>
+			<key>hash2</key>
+			<data>
+			bJNhCO9Kn1rhOsDM/mwJu0NhhAFsC62EnCpU0mK//lU=
+			</data>
+		</dict>
+		<key>Headers/MXKeyVerificationReady.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2xtGVmdBUbdfz7+F4zd3eKmDfrg=
+			</data>
+			<key>hash2</key>
+			<data>
+			A8Yb/1wTwTgoyEdvaB4RxwQHO10drEUkpkvDkVyL8SU=
+			</data>
+		</dict>
 		<key>Headers/MXKeyVerificationRequest.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wpM1TIXOrRQAQtSTRxLExiQr+N0=
+			E8d8s1CmhQLhVEMh06kxXvVAREI=
 			</data>
 			<key>hash2</key>
 			<data>
-			8pNsjiTDI3xdKBJ1S0mm5p0IejV82y9xxunToyDfFNo=
+			UT9lL01y25nyxc0mqC2oZWPY3DCA7XDd6MV2jL1EmNU=
 			</data>
 		</dict>
 		<key>Headers/MXKeyVerificationRequestJSONModel.h</key>
@@ -2274,11 +2282,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QqatUB9g7+JmivfjlIqquYnCvOw=
+			a2bLB8mMLaTRy+pkGw3wmRvqNjE=
 			</data>
 			<key>hash2</key>
 			<data>
-			H+coXORQVBjbDrp6nicirt/k+1KmgBnUbTEW1QAbBsU=
+			qZdZ2aGUQn2mcykpwrQxowLRsbSIY7K8s9uQZV4v/xg=
 			</data>
 		</dict>
 		<key>Headers/MXKeyVerificationStart.h</key>
@@ -2296,11 +2304,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zImuWFFkHVKh22jyJPAAcqBYriI=
+			ayoanTM49qYq8i0Qo3nP5PWaBIo=
 			</data>
 			<key>hash2</key>
 			<data>
-			V2/UY1JKxUza5+kItWPSBetISiAsAJCGKHOJe0wVWfo=
+			Zl2z1fB3up+DaSRbhAIZlsG3sYpQOnYzp7V//HL0dgs=
+			</data>
+		</dict>
+		<key>Headers/MXKeyVerificationTransaction.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			LUQIzbo61RsLzsVjgr9KgN2HyQE=
+			</data>
+			<key>hash2</key>
+			<data>
+			pNyS/eY2O3bi0dcE7pWjDqV23ElR92KfyalwMX65WO0=
+			</data>
+		</dict>
+		<key>Headers/MXKeyVerificationTransaction_Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			w047KkDhi2OAWmnGrTqcTNin/1w=
+			</data>
+			<key>hash2</key>
+			<data>
+			W88XB+vWWuVO3VT9Ahjhodooqwvok5TJ80Mo+Z842iE=
 			</data>
 		</dict>
 		<key>Headers/MXLRUCache.h</key>
@@ -2494,11 +2524,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1MHf8iIrfzWYL01mYO1nivCHbDQ=
+			IhUuWmXPxZJ6N6IJ8O9ZQr24UaE=
 			</data>
 			<key>hash2</key>
 			<data>
-			5OPeruDuB0z+99HpgtzW1pkt1CEVk6na4CqS4A4cMCU=
+			FHSO0AxmQKQF9iXCCqozMR7LE7pGkQxES80eifn7Su0=
 			</data>
 		</dict>
 		<key>Headers/MXMemoryStore.h</key>
@@ -2560,11 +2590,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AEyBVNoYRFYyTD0T34XusvgzEJU=
+			FPhj54ofy7SM19sJKINWyiA6iZQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			1xgYDo3GxtdpcMzj2D/un/F1t7qE9IrSHV8zKJoTbjo=
+			rAi+MSVnchGA5DEVFFCLUYwche4wRnJN04QHIXLCvVA=
 			</data>
 		</dict>
 		<key>Headers/MXOlmEncryption.h</key>
@@ -3231,22 +3261,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/352XwyTG4TVbTWljlpjrgKjh/8=
+			5SFmV682yrDC19jGj4VeTLe3Y2c=
 			</data>
 			<key>hash2</key>
 			<data>
-			uRmy619ptB2+gEwXDKUHSCLT1sZiRrb9lh02/Met+To=
+			SiDgRuknBajWT1VH8j1Y+zt8glgkeCHLjACdZLzOOQY=
 			</data>
 		</dict>
 		<key>Headers/MXSASTransaction_Private.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MPD9MFn3urSuUwehX4VpKF6BehM=
+			LRl3Un+ASqzPFCCGpUIRQns1u+k=
 			</data>
 			<key>hash2</key>
 			<data>
-			PHf6mzbYC5ZscsBV3xus4dNWhW9+liPDlxL7Kflip6w=
+			+aV7QuC7WeYwUOUE6z/y8RJ5M+iRO2UeaFeNZOfQWXs=
 			</data>
 		</dict>
 		<key>Headers/MXSDKOptions.h</key>
@@ -3396,11 +3426,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lFlCo4peaA6rg+mGBvu5za37DLQ=
+			CpdFFZSR153kDzpGitj3K9bLR14=
 			</data>
 			<key>hash2</key>
 			<data>
-			AHYQcUvuEj3QMOe6Cqafp2Qzg1Ob5hhx4o8BtBEfLbs=
+			B+tr7V0EXTppjDkJNHWKhh7ADaqHCoeXOjIq3cFV7bg=
 			</data>
 		</dict>
 		<key>Headers/MXTools.h</key>
@@ -3572,22 +3602,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			aQ9dIwOEzX+fCIfKmnlcPIfJREE=
+			2Du9YhHFqJdp2z+r8vwSDiUqDAI=
 			</data>
 			<key>hash2</key>
 			<data>
-			/J6lKWxkIcWUoVmR8BFxXdxcuvIHmdRwT/RoxQ96xks=
+			G0lTTSCt2NhK4VaS/8r3vfQny+4MNCtj4gvlhpHQTco=
 			</data>
 		</dict>
 		<key>Headers/SwiftMatrixSDK-umbrella.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3MXm100ZQBhnHAFWUOVtwR6Jfws=
+			9lxiCu6n+mwhBZsvu/Ybz6LjHe4=
 			</data>
 			<key>hash2</key>
 			<data>
-			kqFdMeY/gCIpYR8/zd3J36hjJqVeBqNI5Mt5DDa8uPM=
+			+lBZSyvMSPcS6R84+eRh3azPk6bGIlPiGHjGs5bfgG4=
 			</data>
 		</dict>
 		<key>Headers/SwiftMatrixSDK.h</key>
@@ -3605,44 +3635,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QHl7wrxzNzHuHA24+Obr8sX7m+8=
+			pPuBl6PNGY6P++IuGUJhGubRfYE=
 			</data>
 			<key>hash2</key>
 			<data>
-			X4UmT3dKBcJRPrv5CKoU0igEsF0uBjpy9qywOMM5Sfo=
+			6/7DMasiSbEUSR3KdC3QF1sx7AMDcsntoahQPzodnzs=
 			</data>
 		</dict>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wbHIJz5ZJrXLjOeRA6OhYASBEAQ=
+			jk6070IVPCh37T+9wHvwESQe63U=
 			</data>
 			<key>hash2</key>
 			<data>
-			EEuRuGTt0I2UJOpmq7Q2n3TmQtePOZTSNooOoxoVUzo=
+			M041qKnNnwAfX+A/4GBjxT1faoWlybiyWF/aH0yuw7c=
 			</data>
 		</dict>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7GEig312HIxD1GJvPraVAcN5wJc=
+			OJz1Xg6H6avuc465Rk3b2V7K8Q8=
 			</data>
 			<key>hash2</key>
 			<data>
-			r52g30ta6eX7jcWZDICFYUMXl7ZdKAKYBYkuNbDjQS8=
+			F+fmgO61ZpXyqlCOoBkW3c5bCyUpTMeqE7V2lr22yDc=
 			</data>
 		</dict>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5sB8h7tEXZgy0IMgi7ev47KydJE=
+			LEG4CBSu1TvP0nQVVzmCFRhL6B8=
 			</data>
 			<key>hash2</key>
 			<data>
-			F3VOAxDRJdd61J9WdcU1VP+yKzLTkZpA4di0/PPOUJc=
+			522KJrqM26fZOMxlb8MPxBfO0Ip4D+JhNpQr1XAKRzs=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
