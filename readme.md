@@ -26,9 +26,9 @@ end
 
 and then `pod install`.  
 
-Once built, move them from the `Rome` directory into `matrix_bridge/layout/Library/Framworks`. 
+Once built, move them from the `Rome` directory into `matrix_bridge/layout/Library/Framworks`.  
 Code sign them with ldid:  
-`brew install ldid`
+`brew install ldid`  
 `ldid -S NewFramework.framework/NewFramwork`
 
 They will also need to be copied into `$THEOS/lib/` on whatever device you're compiling the project with, 
