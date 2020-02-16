@@ -6,6 +6,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var matrixHandler = MatrixHandler()
 
     lazy var tableView = UITableView()
+    lazy var logo = UILabel()
     lazy var subTitle = UILabel()
     lazy var subText = UILabel()
     lazy var button = UIButton()
@@ -20,26 +21,37 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.loadView()
         self.view.backgroundColor = Helpers.background
 
+        self.view.addSubview(self.logo)
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.subTitle)
         self.view.addSubview(self.subText)
-        self.view.addSubview(button)
+        self.view.addSubview(self.button)
+
+
+        self.logo.text = "[m]"
+        self.logo.textColor = Helpers.green
+        self.logo.textAlignment = .center
+        self.logo.font = Helpers.mainFont(48)
+        self.logo.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(padding)
+            make.left.right.equalToSuperview()
+        }
 
         self.subTitle.text = "sign in to Matrix"
         self.subTitle.textColor = .white
         self.subTitle.textAlignment = .center
         self.subTitle.font = Helpers.mainFont(24)
         self.subTitle.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(110)
+            make.top.equalTo(self.logo.snp.bottom).offset(padding)
             make.left.right.equalToSuperview()
         }
 
-        self.subText.text = "If you haven't already, you'll need to create an account for the iMessage bot to use. It will use this account to relay message to you.\nYou can create an account at https://riot.im/app"
+        self.subText.text = "If you haven't already, you'll need to create an account for the iMessage bot to use. It will use this account to relay message to you.\n\nYou can create an account at https://riot.im/app"
         self.subText.textColor = .gray
         self.subText.numberOfLines = 0
-        self.subText.font = UIFont(name: "HackNerdFontComplete-Regular", size: 13)
+        self.subText.font = UIFont(name: "HackNerdFontComplete-Regular", size: 12)
         self.subText.snp.makeConstraints { (make) in
-            make.top.equalTo(self.subTitle.snp.bottom).offset(22)
+            make.top.equalTo(self.subTitle.snp.bottom).offset(16)
             make.left.equalToSuperview().offset(padding)
             make.right.equalToSuperview().offset(-padding)
         }
@@ -52,7 +64,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.isScrollEnabled = false
         self.tableView.allowsSelection = false
         self.tableView.snp.makeConstraints { (make) in
-            make.centerY.equalTo(self.view.snp.centerYWithinMargins)
+            make.centerY.equalTo(self.view.snp.centerYWithinMargins).offset(12)
             make.height.equalTo(116)
             make.left.equalToSuperview().offset(padding-24)
             make.right.equalToSuperview().offset(-(padding-24))
