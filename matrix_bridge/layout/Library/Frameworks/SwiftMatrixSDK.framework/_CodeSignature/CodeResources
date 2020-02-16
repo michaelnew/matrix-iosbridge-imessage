@@ -954,7 +954,7 @@
 		</data>
 		<key>Headers/SwiftMatrixSDK-Swift.h</key>
 		<data>
-		2Du9YhHFqJdp2z+r8vwSDiUqDAI=
+		aQ9dIwOEzX+fCIfKmnlcPIfJREE=
 		</data>
 		<key>Headers/SwiftMatrixSDK-umbrella.h</key>
 		<data>
@@ -966,23 +966,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		LxYNrHwSJRrOowxzZ4n9S8dNjS4=
+		0AUlsN+3CeDAT0XqLsIzFmB6Vjg=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/i386.swiftdoc</key>
 		<data>
-		pPuBl6PNGY6P++IuGUJhGubRfYE=
+		QHl7wrxzNzHuHA24+Obr8sX7m+8=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/i386.swiftmodule</key>
 		<data>
-		jk6070IVPCh37T+9wHvwESQe63U=
+		wbHIJz5ZJrXLjOeRA6OhYASBEAQ=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		OJz1Xg6H6avuc465Rk3b2V7K8Q8=
+		7GEig312HIxD1GJvPraVAcN5wJc=
 		</data>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		LEG4CBSu1TvP0nQVVzmCFRhL6B8=
+		5sB8h7tEXZgy0IMgi7ev47KydJE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -3602,11 +3602,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2Du9YhHFqJdp2z+r8vwSDiUqDAI=
+			aQ9dIwOEzX+fCIfKmnlcPIfJREE=
 			</data>
 			<key>hash2</key>
 			<data>
-			G0lTTSCt2NhK4VaS/8r3vfQny+4MNCtj4gvlhpHQTco=
+			/J6lKWxkIcWUoVmR8BFxXdxcuvIHmdRwT/RoxQ96xks=
 			</data>
 		</dict>
 		<key>Headers/SwiftMatrixSDK-umbrella.h</key>
@@ -3635,44 +3635,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			pPuBl6PNGY6P++IuGUJhGubRfYE=
+			QHl7wrxzNzHuHA24+Obr8sX7m+8=
 			</data>
 			<key>hash2</key>
 			<data>
-			6/7DMasiSbEUSR3KdC3QF1sx7AMDcsntoahQPzodnzs=
+			X4UmT3dKBcJRPrv5CKoU0igEsF0uBjpy9qywOMM5Sfo=
 			</data>
 		</dict>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jk6070IVPCh37T+9wHvwESQe63U=
+			wbHIJz5ZJrXLjOeRA6OhYASBEAQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			M041qKnNnwAfX+A/4GBjxT1faoWlybiyWF/aH0yuw7c=
+			EEuRuGTt0I2UJOpmq7Q2n3TmQtePOZTSNooOoxoVUzo=
 			</data>
 		</dict>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OJz1Xg6H6avuc465Rk3b2V7K8Q8=
+			7GEig312HIxD1GJvPraVAcN5wJc=
 			</data>
 			<key>hash2</key>
 			<data>
-			F+fmgO61ZpXyqlCOoBkW3c5bCyUpTMeqE7V2lr22yDc=
+			r52g30ta6eX7jcWZDICFYUMXl7ZdKAKYBYkuNbDjQS8=
 			</data>
 		</dict>
 		<key>Modules/SwiftMatrixSDK.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LEG4CBSu1TvP0nQVVzmCFRhL6B8=
+			5sB8h7tEXZgy0IMgi7ev47KydJE=
 			</data>
 			<key>hash2</key>
 			<data>
-			522KJrqM26fZOMxlb8MPxBfO0Ip4D+JhNpQr1XAKRzs=
+			F3VOAxDRJdd61J9WdcU1VP+yKzLTkZpA4di0/PPOUJc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
