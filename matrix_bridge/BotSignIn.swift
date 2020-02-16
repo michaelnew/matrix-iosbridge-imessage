@@ -6,19 +6,43 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var matrixHandler = MatrixHandler()
 
     lazy var tableView = UITableView()
+    lazy var subTitle = UILabel()
+    lazy var subText = UILabel()
     lazy var button = UIButton()
     var userIdCell: DynamicTextEntryCell?
     var passwordCell: DynamicTextEntryCell?
     var serverUrlCell: DynamicTextEntryCell?
     var continueAction: (() -> Void)?
 
-    let padding = 32.0
+    let padding = 44.0
 
     override func loadView() {
         super.loadView()
+        self.view.backgroundColor = Helpers.background
 
-        self.view.backgroundColor = UIColor(red: 16.0/255.0, green: 8.0/255.0, blue: 25.0/255.0, alpha: 1.0)
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.subTitle)
+        self.view.addSubview(self.subText)
+        self.view.addSubview(button)
+
+        self.subTitle.text = "sign in to Matrix"
+        self.subTitle.textColor = .white
+        self.subTitle.textAlignment = .center
+        self.subTitle.font = Helpers.mainFont(24)
+        self.subTitle.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(110)
+            make.left.right.equalToSuperview()
+        }
+
+        self.subText.text = "If you haven't already, you'll need to create an account for the iMessage bot to use. It will use this account to relay message to you.\nYou can create an account at https://riot.im/app"
+        self.subText.textColor = .gray
+        self.subText.numberOfLines = 0
+        self.subText.font = UIFont(name: "HackNerdFontComplete-Regular", size: 13)
+        self.subText.snp.makeConstraints { (make) in
+            make.top.equalTo(self.subTitle.snp.bottom).offset(22)
+            make.left.equalToSuperview().offset(padding)
+            make.right.equalToSuperview().offset(-padding)
+        }
 
         self.tableView.register(DynamicTextEntryCell.classForCoder(), forCellReuseIdentifier: "DynamicTextEntryCell")
         self.tableView.backgroundColor = .clear
@@ -30,9 +54,27 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.view.snp.centerYWithinMargins)
             make.height.equalTo(116)
+            make.left.equalToSuperview().offset(padding-24)
+            make.right.equalToSuperview().offset(-(padding-24))
+        }
+
+        button.backgroundColor = Helpers.green
+        button.setTitle("continue", for: .normal)
+        button.titleLabel?.font = Helpers.mainFont(24)
+        button.layer.cornerRadius = 16;
+        button.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(70)
+            make.bottom.equalToSuperview().offset(-padding)
             make.left.equalToSuperview().offset(padding)
             make.right.equalToSuperview().offset(-padding)
         }
+
+        button.addAction { [weak self] in
+            if let s = self {
+                log("continue to second sign in page")
+            }
+        }
+
     }
 
     // MARK: - Table View Data Source
@@ -73,7 +115,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         switch cell {
         case 0:
             values.label = "bot user ID"
-            values.keyboardType = .emailAddress
+            //values.keyboardType = .emailAddress
         case 1:
             values.label = "password"
             values.secureText = true

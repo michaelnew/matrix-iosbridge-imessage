@@ -9,6 +9,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = MainNavController()
         window!.makeKeyAndVisible()
+        //for familyName in UIFont.familyNames {
+        //    for fontName in UIFont.fontNames(forFamilyName: familyName) {
+        //        log("\(fontName)")
+        //    }
+        //}
         return true
     }
 }

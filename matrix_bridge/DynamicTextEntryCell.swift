@@ -56,7 +56,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         }
 
         self.contentView.addSubview(label)
-        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.font = Helpers.mainFont(16)
         label.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(21)
             make.left.equalToSuperview().offset(24)
@@ -64,7 +64,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         }
 
         self.contentView.addSubview(textField)
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        textField.font = Helpers.mainFont(16)
         textField.clearButtonMode = .whileEditing
         textField.delegate = self
         textField.snp.makeConstraints { (make) -> Void in
