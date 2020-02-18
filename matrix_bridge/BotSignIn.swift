@@ -10,6 +10,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     lazy var subTitle = UILabel()
     lazy var subText = UILabel()
     lazy var button = UIButton()
+    lazy var pageNumber = UILabel()
     var userIdCell: DynamicTextEntryCell?
     var passwordCell: DynamicTextEntryCell?
     var serverUrlCell: DynamicTextEntryCell?
@@ -26,6 +27,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.view.addSubview(self.subTitle)
         self.view.addSubview(self.subText)
         self.view.addSubview(self.button)
+        self.view.addSubview(self.pageNumber)
 
 
         self.logo.text = "[m]"
@@ -89,6 +91,15 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
 
+        self.pageNumber.text = "1/2"
+        self.pageNumber.textColor = .gray
+        self.pageNumber.font = Helpers.mainFont(12)
+        self.pageNumber.textAlignment = .center
+        self.pageNumber.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-4)
+        }
     }
 
     // MARK: - Table View Data Source
