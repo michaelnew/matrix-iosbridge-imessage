@@ -15,6 +15,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         var dontSelectTextField = false
         var keyboardType = UIKeyboardType.default
         var tapped: (() -> Void)?
+        var editingEnded: ((String?) -> Void)?
         var textColor = UIColor.black
         var secondaryColor = UIColor.black
     }
@@ -100,6 +101,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         updateState(selected: false, animate: true)
         hitbox.isHidden = false
         textField.resignFirstResponder()
+        self.values?.editingEnded?(self.textField.text)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

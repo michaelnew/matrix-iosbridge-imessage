@@ -149,6 +149,9 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         switch cell {
         case 0:
             values.label = "bot user ID"
+            values.editingEnded = { [weak self] text in
+                log("try server discovery here: \(text ?? "")")
+            }
         case 2:
             values.label = "password"
             values.secureText = true
