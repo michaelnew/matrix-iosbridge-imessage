@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cd "$(dirname "$0")" # make sure we're in this script's directory
-REMOTE=iphone7plus
+REMOTE=iphoneUSB
 
 rsync -r ./ ${REMOTE}:/opt/mobile/projects/matrix-iosbridge-imessage

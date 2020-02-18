@@ -49,14 +49,16 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.subText.text = "If you haven't already, you'll need to create an account for the iMessage bot to use. It will use this account to relay message to you.\n\nYou can create an account at https://riot.im/app"
         self.subText.textColor = .gray
         self.subText.numberOfLines = 0
-        self.subText.font = UIFont(name: "HackNerdFontComplete-Regular", size: 12)
+        self.subText.font = Helpers.mainFont(12)
         self.subText.snp.makeConstraints { (make) in
-            make.top.equalTo(self.subTitle.snp.bottom).offset(16)
+            make.top.equalTo(self.subTitle.snp.bottom).offset(10)
             make.left.equalToSuperview().offset(padding)
             make.right.equalToSuperview().offset(-padding)
         }
 
         self.tableView.register(DynamicTextEntryCell.classForCoder(), forCellReuseIdentifier: "DynamicTextEntryCell")
+        self.tableView.register(DescriptiveTextCell.classForCoder(), forCellReuseIdentifier: "DescriptiveTextCell")
+
         self.tableView.backgroundColor = .clear
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -65,7 +67,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.allowsSelection = false
         self.tableView.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.view.snp.centerYWithinMargins).offset(12)
-            make.height.equalTo(116)
+            make.height.equalTo(140)
             make.left.equalToSuperview().offset(padding-24)
             make.right.equalToSuperview().offset(-(padding-24))
         }
@@ -95,40 +97,48 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 58
+        if indexPath.row != 1 { return 58 }
+        else { return 24 }
     }
 
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTextEntryCell") as! DynamicTextEntryCell
-        cell.backgroundColor = UIColor.clear
-        let v = valuesFor(cell: indexPath.row)
-        cell.set(values: v)
+        if indexPath.row != 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTextEntryCell") as! DynamicTextEntryCell
+            cell.backgroundColor = UIColor.clear
+            let v = valuesFor(cell: indexPath.row)
+            cell.set(values: v)
 
-        if indexPath.row == 0 {
-            self.userIdCell = cell
-        } else if indexPath.row == 1 {
-            self.passwordCell = cell
-        } else if indexPath.row == 2 {
-            self.serverUrlCell = cell
+            if indexPath.row == 0 {
+                self.userIdCell = cell
+            } else if indexPath.row == 2 {
+                self.passwordCell = cell
+            } else if indexPath.row == 3 {
+                self.serverUrlCell = cell
+            }
+
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptiveTextCell") as! DescriptiveTextCell
+            cell.backgroundColor = UIColor.clear
+            let v = DescriptiveTextCell.Values(text: "@myImessageBot:matrix.org (for example)", textColor: .gray)
+            cell.set(values: v)
+            return cell
         }
-
-        return cell
     }
 
-    func valuesFor(cell: Int) -> CellValues {
-        var values = CellValues()
+    func valuesFor(cell: Int) -> DynamicTextEntryCell.Values {
+        var values = DynamicTextEntryCell.Values()
         values.text = ""
 
         switch cell {
         case 0:
             values.label = "bot user ID"
-            //values.keyboardType = .emailAddress
-        case 1:
+        case 2:
             values.label = "password"
             values.secureText = true
         default:
@@ -136,6 +146,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
 
         values.textColor = .white
+        values.labelEditingAlpha = 0.55
         values.secondaryColor = .gray
         return values
     }

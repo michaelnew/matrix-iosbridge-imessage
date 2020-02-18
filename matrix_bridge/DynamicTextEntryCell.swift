@@ -1,21 +1,23 @@
 import UIKit
 import SnapKit
 
-public struct CellValues {
-    var label: String?
-    var text: String?
-    var secureText = false
-    var autoCorrect = false
-    var selectOnTap = false
-    var capitalization: UITextAutocapitalizationType = .none
-    var dontSelectTextField = false
-    var keyboardType = UIKeyboardType.default
-    var tapped: (() -> Void)?
-    var textColor = UIColor.black
-    var secondaryColor = UIColor.black
-}
 
 class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
+
+    public struct Values {
+        var label: String?
+        var labelEditingAlpha = CGFloat(0.5)
+        var text: String?
+        var secureText = false
+        var autoCorrect = false
+        var selectOnTap = false
+        var capitalization: UITextAutocapitalizationType = .none
+        var dontSelectTextField = false
+        var keyboardType = UIKeyboardType.default
+        var tapped: (() -> Void)?
+        var textColor = UIColor.black
+        var secondaryColor = UIColor.black
+    }
 
     var labelYConstraint: Constraint!
     private let labelYOffset: CGFloat = 8.0
@@ -25,7 +27,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
     lazy var line = UIView()
 
     let labelDownscale: CGFloat = 0.7
-    var values: CellValues?
+    var values: Values?
 
     var subviewHaveBeenLayedOut = false
 
@@ -52,7 +54,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
             make.height.equalTo(0.5)
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview()
         }
 
         self.contentView.addSubview(label)
@@ -114,10 +116,10 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         }
     }
 
-    func set(values: CellValues) {
+    func set(values: Values) {
         self.values = values
         label.text = values.label
-        label.textColor = values.secondaryColor
+        label.textColor = values.textColor
         line.backgroundColor = values.secondaryColor
         textField.text = values.text
         textField.textColor = values.textColor
@@ -137,6 +139,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         if animate {
             UIView.animate(withDuration: 0.3) {
                 self.label.transform = CGAffineTransform(scaleX: 1, y: 1).translatedBy(x: 0, y: 0)
+                self.label.alpha = 1.0
                 self.layoutIfNeeded()
             }
         } else {
@@ -158,6 +161,7 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         if animate {
             UIView.animate(withDuration: 0.3) {
                 self.label.transform = CGAffineTransform(scaleX: s, y: s).translatedBy(x: translation, y: 0)
+                if let v = self.values { self.label.alpha = v.labelEditingAlpha }
                 self.layoutIfNeeded()
             }
         } else {
