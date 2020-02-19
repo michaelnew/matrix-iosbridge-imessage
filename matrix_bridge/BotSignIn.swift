@@ -45,7 +45,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.subTitle.textAlignment = .center
         self.subTitle.font = Helpers.mainFont(24)
         self.subTitle.snp.makeConstraints { (make) in
-            make.top.equalTo(self.logo.snp.bottom).offset(padding)
+            make.top.equalTo(self.logo.snp.bottom).offset(padding*0.66)
             make.left.right.equalToSuperview()
         }
 
@@ -147,16 +147,14 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func handleBotUsernameEntry(_ userId: String?) {
         if let uid = userId {
             if MatrixHandler.checkUserIdLooksValid(uid) {
-                log("that userId looks okay")
-
-                // Does this need to be static?
                 _ = MatrixHandler.getHomeserverURL(from: uid, completion: { url in
                     if let url = url {
                         log("found homeserver url: " + url)
                         if var v = self.statusCell?.values {
                             v.text = "Matrix server found ✓"
-                            self.statusCell?.set(values: v)
-                            // FIXME: for some reason this isn't updating the label right away
+                            DispatchQueue.main.async { () in
+                                self.statusCell?.set(values: v)
+                            }
                         }
                     } else {
                         log("could't get matrix server client URL")
