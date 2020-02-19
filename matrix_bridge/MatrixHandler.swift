@@ -3,9 +3,14 @@ import Foundation
 
 class MatrixHandler {
 
+    private var matrixClient: MXRestClient?
+
+    init(_ serverURL: String) {
+        let url = URL(string: serverURL)!
+        self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
+    }
+
     static func getHomeserverURL(from username: String, completion: @escaping (String?) -> ()) {
-
-
         // use this maybe?
         //- (MXHTTPOperation*)wellKnow:(void (^)(MXWellKnown *wellKnown))success
         //             failure:(void (^)(NSError *error))failure;
@@ -44,16 +49,35 @@ class MatrixHandler {
         }
     }
 
+    static func localpartFrom(_ userId: String) -> String? {
+        // @localpart:domain
+        var localpart: String?
+        var parts = userId.components(separatedBy: ":")
+        if parts.count > 1 {
+            localpart = parts[0]
+        } else {
+            log("couldn't get localpart from username")
+        }
+        return localpart?.replacingOccurrences(of: "@", with: "", options: NSString.CompareOptions.literal, range:nil)
+    }
+
     static func checkUserIdLooksValid(_ userId: String) -> Bool {
         // TODO: make this smarter
         return userId.contains("@") && userId.contains(":")
     }
 
-    private var matrixClient: MXRestClient?
 
-    func checkMatrixIdIsInUse(userId: String) {
-    //- (MXHTTPOperation*)isUserNameInUse:(NSString*)username
-    //                           callback:(void (^)(BOOL isUserNameInUse))callback NS_REFINED_FOR_SWIFT;
+    func isMatrixIdInUse(_ userId: String) {
+        // this doesn't work if registration is off for the server the user ID is using,
+        // which means it's fairly useless for our purposes: https://github.com/matrix-org/matrix-ios-sdk/issues/783
+
+        let localpart = MatrixHandler.localpartFrom(userId)
+        self.matrixClient?.testUserRegistration(localpart, callback: { (response) in 
+            log("testRegistration: \(response.debugDescription)")
+        })
+        self.matrixClient?.isUserNameInUse(userId, completion: { (response) in
+            log("isUserNameInUse: \(response)")
+        })
     }
 
     func getToken(userId: String, password: String, homeServerUrl: String){

@@ -5,7 +5,7 @@ import SwiftMatrixSDK
 class RootViewController: UITableViewController {
 
     var objects: [String] = []
-    var matrixHandler = MatrixHandler()
+    var matrixHandler: MatrixHandler?
 
     override func loadView() {
         super.loadView()
@@ -23,7 +23,7 @@ class RootViewController: UITableViewController {
             let name = note.userInfo?["recipientName"] as? String ?? "recipient unkown"
             self.objects.insert(message + " (" + name + ")", at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-            self.matrixHandler.send(message: "\(name): " + message + " (guid: \(guid))")
+            self.matrixHandler?.send(message: "\(name): " + message + " (guid: \(guid))")
         }
 
         let userId = "@iosmessagebot:mikenew.io"
@@ -33,7 +33,7 @@ class RootViewController: UITableViewController {
         _ = MatrixHandler.getHomeserverURL(from: userId, completion: { url in
             if let url = url {
                 log("url: " + url)
-                self.matrixHandler.getToken(userId: userId, password: password, homeServerUrl: url)
+                self.matrixHandler?.getToken(userId: userId, password: password, homeServerUrl: url)
                 // TODO: store credentials if we get a successful login
             } else {
                 log("could't get matrix server client URL")
@@ -52,7 +52,7 @@ class RootViewController: UITableViewController {
         // Could also maybe store the token in keychain rather than in user defaults
         //guard let password = UserDefaults.standard.string(forKey: "matrixBotPassword") else { return }
 
-        self.matrixHandler.loginToMatrix(userId: userId, token: token, homeServerUrl: homeServerUrl)
+        self.matrixHandler?.loginToMatrix(userId: userId, token: token, homeServerUrl: homeServerUrl)
     }
 
     // MARK: - Table View Data Source

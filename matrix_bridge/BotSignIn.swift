@@ -3,7 +3,7 @@ import Foundation
 
 class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var matrixHandler = MatrixHandler()
+    var matrixHandler: MatrixHandler?
 
     lazy var tableView = UITableView()
     lazy var logo = UILabel()
@@ -16,6 +16,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var serverUrlCell: DynamicTextEntryCell?
     var statusCell: DescriptiveTextCell?
     var continueAction: (() -> Void)?
+    var failedFindingServerUrl = false
 
     let padding = 44.0
 
@@ -69,25 +70,27 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.isScrollEnabled = false
         self.tableView.allowsSelection = false
         self.tableView.snp.makeConstraints { (make) in
-            make.centerY.equalTo(self.view.snp.centerYWithinMargins).offset(12)
-            make.height.equalTo(140)
+            //make.centerY.equalTo(self.view.snp.centerYWithinMargins).offset(12)
+            //make.height.equalTo(140)
+            make.top.equalTo(self.subText.snp.bottom).offset(80)
             make.left.equalToSuperview().offset(padding-24)
             make.right.equalToSuperview().offset(-(padding-24))
+            make.bottom.equalTo(self.button.snp.top)
         }
 
-        button.backgroundColor = Helpers.green
-        button.setTitle("continue", for: .normal)
-        button.titleLabel?.font = Helpers.mainFont(24)
-        button.layer.cornerRadius = 16;
-        button.snp.makeConstraints { (make) -> Void in
+        self.button.backgroundColor = Helpers.green
+        self.button.setTitle("continue", for: .normal)
+        self.button.titleLabel?.font = Helpers.mainFont(24)
+        self.button.layer.cornerRadius = 16;
+        self.button.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(70)
             make.bottom.equalToSuperview().offset(-padding)
             make.left.equalToSuperview().offset(padding)
             make.right.equalToSuperview().offset(-padding)
         }
 
-        button.addAction { [weak self] in
-            if let s = self {
+        self.button.addAction { [weak self] in
+            if self != nil {
                 log("continue to second sign in page")
             }
         }
@@ -109,17 +112,38 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.failedFindingServerUrl ? 4 : 3
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row != 1 { return 58 }
-        else { return 24 }
+        switch indexPath.row {
+        case 1:
+            return self.failedFindingServerUrl ? 58 : 24
+        case 2:
+            return self.failedFindingServerUrl ? 24 : 58
+        default:
+            return 58
+        }
     }
 
+    func descriptiveCellWith(_ text: String) -> DescriptiveTextCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptiveTextCell") as! DescriptiveTextCell
+        cell.backgroundColor = UIColor.clear
+        let v = DescriptiveTextCell.Values(text: text, textColor: .gray)
+        cell.set(values: v)
+        return cell
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row != 1 {
+        if indexPath.row == 1 && !self.failedFindingServerUrl {
+            let cell = self.descriptiveCellWith("@myImessageBot:matrix.org (for example)")
+            self.statusCell = cell
+            return cell
+        } else if indexPath.row == 2 && self.failedFindingServerUrl {
+            let cell = self.descriptiveCellWith("Server URL wasn't found, but you can enter it here")
+            self.statusCell = cell
+            return cell
+        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTextEntryCell") as! DynamicTextEntryCell
             cell.backgroundColor = UIColor.clear
             let v = valuesFor(cell: indexPath.row)
@@ -127,40 +151,45 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             if indexPath.row == 0 {
                 self.userIdCell = cell
+            } else if indexPath.row == 1 {
+                self.serverUrlCell = cell
             } else if indexPath.row == 2 {
                 self.passwordCell = cell
-            } else if indexPath.row == 3 {
-                self.serverUrlCell = cell
             }
 
             return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptiveTextCell") as! DescriptiveTextCell
-            cell.backgroundColor = UIColor.clear
-            let v = DescriptiveTextCell.Values(text: "@myImessageBot:matrix.org (for example)", textColor: .gray)
-            cell.set(values: v)
-            self.statusCell = cell
-            return cell
         }
+    }
+
+    func showInStatusCell(_ text: String) {
+        if var v = self.statusCell?.values {
+            v.text = text
+            DispatchQueue.main.async { () in 
+                self.statusCell?.set(values: v) 
+            }
+        }
+    }
+
+    func promptForServerUrl() {
+        self.failedFindingServerUrl = true
+        DispatchQueue.main.async { () in 
+            self.tableView.insertRows(at:[IndexPath(row: 1, section: 0)], with:.none)
+            self.tableView.reloadRows(at:[IndexPath(row: 2, section: 0)], with:.fade)
+        }
+        log("could't get matrix server client URL")
     }
 
     func handleBotUsernameEntry(_ userId: String?) {
         if let uid = userId {
             if MatrixHandler.checkUserIdLooksValid(uid) {
-                _ = MatrixHandler.getHomeserverURL(from: uid, completion: { url in
+                MatrixHandler.getHomeserverURL(from: uid, completion: { url in
                     if let url = url {
-                        log("found homeserver url: " + url)
-                        if var v = self.statusCell?.values {
-                            v.text = "Matrix server found ✓"
-                            DispatchQueue.main.async { () in
-                                self.statusCell?.set(values: v)
-                            }
-                        }
+                        self.matrixHandler = MatrixHandler(url)
+                        self.showInStatusCell("Matrix server found ✓")
                     } else {
-                        log("could't get matrix server client URL")
+                        self.promptForServerUrl()
                     }
                 })
-
             } else {
                 log("that userId does not look valid")
             }
@@ -176,6 +205,11 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             values.label = "bot user ID"
             values.editingEnded = { [weak self] text in
                 self?.handleBotUsernameEntry(text)
+            }
+        case 1:
+            values.label = "server URL"
+            values.editingEnded = { [weak self] text in
+                log("user entered server URL: \(text)")
             }
         case 2:
             values.label = "password"
