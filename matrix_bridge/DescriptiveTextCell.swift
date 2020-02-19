@@ -30,6 +30,7 @@ class DescriptiveTextCell: UITableViewCell {
             make.left.equalToSuperview().offset(24)
         }
     }
+
     func set(values: Values) {
         self.values = values
         label.text = values.text

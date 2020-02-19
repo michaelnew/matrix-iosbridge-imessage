@@ -44,7 +44,11 @@ class MatrixHandler {
         }
     }
 
-    // TODO: move all of this into the MatrixHandler class and clean it up
+    static func checkUserIdLooksValid(_ userId: String) -> Bool {
+        // TODO: make this smarter
+        return userId.contains("@") && userId.contains(":")
+    }
+
     private var matrixClient: MXRestClient?
 
     func checkMatrixIdIsInUse(userId: String) {

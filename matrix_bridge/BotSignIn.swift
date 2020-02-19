@@ -14,6 +14,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var userIdCell: DynamicTextEntryCell?
     var passwordCell: DynamicTextEntryCell?
     var serverUrlCell: DynamicTextEntryCell?
+    var statusCell: DescriptiveTextCell?
     var continueAction: (() -> Void)?
 
     let padding = 44.0
@@ -138,7 +139,33 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor.clear
             let v = DescriptiveTextCell.Values(text: "@myImessageBot:matrix.org (for example)", textColor: .gray)
             cell.set(values: v)
+            self.statusCell = cell
             return cell
+        }
+    }
+
+    func handleBotUsernameEntry(_ userId: String?) {
+        if let uid = userId {
+            if MatrixHandler.checkUserIdLooksValid(uid) {
+                log("that userId looks okay")
+
+                // Does this need to be static?
+                _ = MatrixHandler.getHomeserverURL(from: uid, completion: { url in
+                    if let url = url {
+                        log("found homeserver url: " + url)
+                        if var v = self.statusCell?.values {
+                            v.text = "Matrix server found ✓"
+                            self.statusCell?.set(values: v)
+                            // FIXME: for some reason this isn't updating the label right away
+                        }
+                    } else {
+                        log("could't get matrix server client URL")
+                    }
+                })
+
+            } else {
+                log("that userId does not look valid")
+            }
         }
     }
 
@@ -150,7 +177,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         case 0:
             values.label = "bot user ID"
             values.editingEnded = { [weak self] text in
-                log("try server discovery here: \(text ?? "")")
+                self?.handleBotUsernameEntry(text)
             }
         case 2:
             values.label = "password"
