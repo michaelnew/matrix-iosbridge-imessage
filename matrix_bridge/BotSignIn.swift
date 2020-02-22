@@ -224,11 +224,4 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         values.secondaryColor = .gray
         return values
     }
-
-    func descriptiveCellWith(_ text: String) -> DescriptiveTextCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: DescriptiveTextCell.self)) as! DescriptiveTextCell
-        let v = DescriptiveTextCell.Values(text: text, textColor: .gray)
-        cell.set(values: v)
-        return cell
-    }
 }
