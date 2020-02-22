@@ -37,6 +37,10 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
         case Editing
     }
 
+    static func height() -> CGFloat {
+        return 58 // cell height doesn't change, so just hardcode it
+    }
+
     var state: SelectionState = .Default
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -50,34 +54,35 @@ class DynamicTextEntryCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func setup() {
-        self.contentView.addSubview(line)
+        self.addSubview(line)
+        self.backgroundColor = .clear
         line.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(0.5)
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
 
-        self.contentView.addSubview(label)
+        self.addSubview(label)
         label.font = Helpers.mainFont(16)
         label.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(21)
-            make.left.equalToSuperview().offset(24)
+            make.left.equalToSuperview()
             self.labelYConstraint = make.bottom.equalTo(line).offset(-self.labelYOffset).constraint
         }
 
-        self.contentView.addSubview(textField)
+        self.addSubview(textField)
         textField.font = Helpers.mainFont(16)
         textField.clearButtonMode = .whileEditing
         textField.delegate = self
         textField.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(21)
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.bottom.equalTo(line).offset(-self.labelYOffset)
         }
 
-        self.contentView.addSubview(hitbox)
+        self.addSubview(hitbox)
         hitbox.snp.makeConstraints { (make) -> Void in
             make.top.bottom.left.right.equalToSuperview().priority(.medium)
         }

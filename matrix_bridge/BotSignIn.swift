@@ -18,8 +18,6 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var continueAction: (() -> Void)?
     var failedFindingServerUrl = false
 
-    let padding = 44.0
-
     override func loadView() {
         super.loadView()
         self.view.backgroundColor = Helpers.background
@@ -31,13 +29,12 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.view.addSubview(self.button)
         self.view.addSubview(self.pageNumber)
 
-
         self.logo.text = "[m]"
         self.logo.textColor = Helpers.green
         self.logo.textAlignment = .center
         self.logo.font = Helpers.mainFont(48)
         self.logo.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(padding)
+            make.top.equalToSuperview().offset(Helpers.padding)
             make.left.right.equalToSuperview()
         }
 
@@ -46,7 +43,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.subTitle.textAlignment = .center
         self.subTitle.font = Helpers.mainFont(24)
         self.subTitle.snp.makeConstraints { (make) in
-            make.top.equalTo(self.logo.snp.bottom).offset(padding*0.66)
+            make.top.equalTo(self.logo.snp.bottom).offset(Helpers.padding*0.66)
             make.left.right.equalToSuperview()
         }
 
@@ -56,12 +53,14 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.subText.font = Helpers.mainFont(12)
         self.subText.snp.makeConstraints { (make) in
             make.top.equalTo(self.subTitle.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(padding)
-            make.right.equalToSuperview().offset(-padding)
+            make.left.equalToSuperview().offset(Helpers.padding)
+            make.right.equalToSuperview().offset(-Helpers.padding)
         }
 
-        self.tableView.register(DynamicTextEntryCell.classForCoder(), forCellReuseIdentifier: "DynamicTextEntryCell")
-        self.tableView.register(DescriptiveTextCell.classForCoder(), forCellReuseIdentifier: "DescriptiveTextCell")
+        self.tableView.register(DynamicTextEntryCell.classForCoder(), 
+                                forCellReuseIdentifier: String(describing: DynamicTextEntryCell.self))
+        self.tableView.register(DescriptiveTextCell.classForCoder(), 
+                                forCellReuseIdentifier: String(describing: DescriptiveTextCell.self))
 
         self.tableView.backgroundColor = .clear
         self.tableView.delegate = self
@@ -70,11 +69,9 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.isScrollEnabled = false
         self.tableView.allowsSelection = false
         self.tableView.snp.makeConstraints { (make) in
-            //make.centerY.equalTo(self.view.snp.centerYWithinMargins).offset(12)
-            //make.height.equalTo(140)
             make.top.equalTo(self.subText.snp.bottom).offset(80)
-            make.left.equalToSuperview().offset(padding-24)
-            make.right.equalToSuperview().offset(-(padding-24))
+            make.left.equalToSuperview().offset(Helpers.padding)
+            make.right.equalToSuperview().offset(-Helpers.padding)
             make.bottom.equalTo(self.button.snp.top)
         }
 
@@ -84,9 +81,9 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.button.layer.cornerRadius = 16;
         self.button.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(70)
-            make.bottom.equalToSuperview().offset(-padding)
-            make.left.equalToSuperview().offset(padding)
-            make.right.equalToSuperview().offset(-padding)
+            make.bottom.equalToSuperview().offset(-Helpers.padding)
+            make.left.equalToSuperview().offset(Helpers.padding)
+            make.right.equalToSuperview().offset(-Helpers.padding)
         }
 
         self.button.addAction { [weak self] in
@@ -116,36 +113,31 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let t = "Your server URL wasn't found, but you can enter it here. It will look like https://matrix.org, for example"
+        let d = DescriptiveTextCell.heightFor(self.tableView.frame.size.width, text: t)
+
         switch indexPath.row {
         case 1:
-            return self.failedFindingServerUrl ? 58 : 24
+            return self.failedFindingServerUrl ? DynamicTextEntryCell.height() : d
         case 2:
-            return self.failedFindingServerUrl ? 24 : 58
+            return self.failedFindingServerUrl ? d : DynamicTextEntryCell.height()
         default:
-            return 58
+            return DynamicTextEntryCell.height()
         }
     }
 
-    func descriptiveCellWith(_ text: String) -> DescriptiveTextCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptiveTextCell") as! DescriptiveTextCell
-        cell.backgroundColor = UIColor.clear
-        let v = DescriptiveTextCell.Values(text: text, textColor: .gray)
-        cell.set(values: v)
-        return cell
-    }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //let c = self.cellTypeFor(indexPath.row).init()
         if indexPath.row == 1 && !self.failedFindingServerUrl {
             let cell = self.descriptiveCellWith("@myImessageBot:matrix.org (for example)")
             self.statusCell = cell
             return cell
         } else if indexPath.row == 2 && self.failedFindingServerUrl {
-            let cell = self.descriptiveCellWith("Server URL wasn't found, but you can enter it here")
+            let cell = self.descriptiveCellWith("Your server URL wasn't found, but you can enter it here. It will look like https://matrix.org, for example")
             self.statusCell = cell
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTextEntryCell") as! DynamicTextEntryCell
-            cell.backgroundColor = UIColor.clear
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: DynamicTextEntryCell.self)) as! DynamicTextEntryCell
             let v = valuesFor(cell: indexPath.row)
             cell.set(values: v)
 
@@ -176,7 +168,6 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableView.insertRows(at:[IndexPath(row: 1, section: 0)], with:.none)
             self.tableView.reloadRows(at:[IndexPath(row: 2, section: 0)], with:.fade)
         }
-        log("could't get matrix server client URL")
     }
 
     func handleBotUsernameEntry(_ userId: String?) {
@@ -209,7 +200,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         case 1:
             values.label = "server URL"
             values.editingEnded = { [weak self] text in
-                log("user entered server URL: \(text)")
+                log("user entered server URL: \(text ?? "")")
             }
         case 2:
             values.label = "password"
@@ -224,5 +215,20 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return values
     }
 
+    func descriptiveCellWith(_ text: String) -> DescriptiveTextCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: DescriptiveTextCell.self)) as! DescriptiveTextCell
+        let v = DescriptiveTextCell.Values(text: text, textColor: .gray)
+        cell.set(values: v)
+        return cell
+    }
 
+    func cellTypeFor(_ row: Int) -> UITableViewCell.Type {
+        if row == 1 && !self.failedFindingServerUrl {
+            return DescriptiveTextCell.self
+        } else if row == 2 && self.failedFindingServerUrl {
+            return DescriptiveTextCell.self
+        } else {
+            return DynamicTextEntryCell.self
+        }
+    }
 }
