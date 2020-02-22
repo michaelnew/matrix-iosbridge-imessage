@@ -69,7 +69,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.isScrollEnabled = false
         self.tableView.allowsSelection = false
         self.tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.subText.snp.bottom).offset(80)
+            make.top.equalTo(self.subText.snp.bottom).offset(56)
             make.left.equalToSuperview().offset(Helpers.padding)
             make.right.equalToSuperview().offset(-Helpers.padding)
             make.bottom.equalTo(self.button.snp.top)
@@ -113,43 +113,53 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let t = "Your server URL wasn't found, but you can enter it here. It will look like https://matrix.org, for example"
-        let d = DescriptiveTextCell.heightFor(self.tableView.frame.size.width, text: t)
-
-        switch indexPath.row {
-        case 1:
-            return self.failedFindingServerUrl ? DynamicTextEntryCell.height() : d
-        case 2:
-            return self.failedFindingServerUrl ? d : DynamicTextEntryCell.height()
-        default:
-            return DynamicTextEntryCell.height()
+        if self.cellTypeFor(indexPath.row) == DescriptiveTextCell.self {
+            let t = self.textForDescriptiveCell(indexPath.row)
+            return DescriptiveTextCell.heightFor(self.tableView.frame.size.width, text: t!) + 6
+        } else {
+            return DynamicTextEntryCell.height() + 6
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let c = self.cellTypeFor(indexPath.row).init()
-        if indexPath.row == 1 && !self.failedFindingServerUrl {
-            let cell = self.descriptiveCellWith("@myImessageBot:matrix.org (for example)")
-            self.statusCell = cell
-            return cell
-        } else if indexPath.row == 2 && self.failedFindingServerUrl {
-            let cell = self.descriptiveCellWith("Your server URL wasn't found, but you can enter it here. It will look like https://matrix.org, for example")
-            self.statusCell = cell
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: DynamicTextEntryCell.self)) as! DynamicTextEntryCell
-            let v = valuesFor(cell: indexPath.row)
-            cell.set(values: v)
+        let t = self.cellTypeFor(indexPath.row)
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: t))
+
+        if let c = cell as? DescriptiveTextCell {
+            c.set(values: DescriptiveTextCell.Values(text: self.textForDescriptiveCell(indexPath.row), textColor: .gray))
+            self.statusCell = c
+
+        } else if let c = cell as? DynamicTextEntryCell {
+            c.set(values: valuesFor(cell: indexPath.row))
 
             if indexPath.row == 0 {
-                self.userIdCell = cell
+                self.userIdCell = c
             } else if indexPath.row == 1 {
-                self.serverUrlCell = cell
+                self.serverUrlCell = c
             } else if indexPath.row == 2 {
-                self.passwordCell = cell
+                self.passwordCell = c
             }
+        }
+        return cell!
+    }
 
-            return cell
+    func textForDescriptiveCell(_ row: Int) -> String? {
+        var result: String?
+        if row == 1 && !self.failedFindingServerUrl {
+            result = "@myImessageBot:matrix.org (for example)"
+        } else if row == 2 && self.failedFindingServerUrl {
+            result = "Your server URL wasn't found, but you can enter it here. It will look like https://matrix.org, for example"
+        }
+        return result
+    }
+
+    func cellTypeFor(_ row: Int) -> UITableViewCell.Type {
+        if row == 1 && !self.failedFindingServerUrl {
+            return DescriptiveTextCell.self
+        } else if row == 2 && self.failedFindingServerUrl {
+            return DescriptiveTextCell.self
+        } else {
+            return DynamicTextEntryCell.self
         }
     }
 
@@ -220,15 +230,5 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let v = DescriptiveTextCell.Values(text: text, textColor: .gray)
         cell.set(values: v)
         return cell
-    }
-
-    func cellTypeFor(_ row: Int) -> UITableViewCell.Type {
-        if row == 1 && !self.failedFindingServerUrl {
-            return DescriptiveTextCell.self
-        } else if row == 2 && self.failedFindingServerUrl {
-            return DescriptiveTextCell.self
-        } else {
-            return DynamicTextEntryCell.self
-        }
     }
 }
