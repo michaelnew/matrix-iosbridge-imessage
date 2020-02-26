@@ -33,7 +33,7 @@ class RootViewController: UITableViewController {
         _ = MatrixHandler.getHomeserverURL(from: userId, completion: { url in
             if let url = url {
                 log("url: " + url)
-                self.matrixHandler?.getToken(userId: userId, password: password, homeServerUrl: url)
+                //self.matrixHandler?.getToken(userId: userId, password: password, homeServerUrl: url)
                 // TODO: store credentials if we get a successful login
             } else {
                 log("could't get matrix server client URL")

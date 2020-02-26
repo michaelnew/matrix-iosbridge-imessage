@@ -1,7 +1,7 @@
 import UIKit
 import Foundation
 
-class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UserSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var matrixHandler: MatrixHandler?
 
@@ -12,11 +12,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     lazy var button = UIButton()
     lazy var pageNumber = UILabel()
     var userIdCell: DynamicTextEntryCell?
-    var passwordCell: DynamicTextEntryCell?
-    var serverUrlCell: DynamicTextEntryCell?
-    var statusCell: DescriptiveTextCell?
     var continueAction: (() -> Void)?
-    var failedFindingServerUrl = false
 
     override func loadView() {
         super.loadView()
@@ -38,7 +34,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             make.left.right.equalToSuperview()
         }
 
-        self.subTitle.text = "sign in to Matrix"
+        self.subTitle.text = "enter your user ID"
         self.subTitle.textColor = .white
         self.subTitle.textAlignment = .center
         self.subTitle.font = Helpers.mainFont(24)
@@ -47,7 +43,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             make.left.right.equalToSuperview()
         }
 
-        self.subText.text = "If you haven't already, you'll need to create an account for the iMessage bot to use. It will use this account to relay message to you.\n\nYou can create an account at https://riot.im/app"
+        self.subText.text = "This is the account the bot will relay messages to (so... you). It will look something like @myCleverUsername:matrix.org"
         self.subText.textColor = .gray
         self.subText.numberOfLines = 0
         self.subText.font = Helpers.mainFont(12)
@@ -59,8 +55,6 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         self.tableView.register(DynamicTextEntryCell.classForCoder(), 
                                 forCellReuseIdentifier: String(describing: DynamicTextEntryCell.self))
-        self.tableView.register(DescriptiveTextCell.classForCoder(), 
-                                forCellReuseIdentifier: String(describing: DescriptiveTextCell.self))
 
         self.tableView.backgroundColor = .clear
         self.tableView.delegate = self
@@ -88,25 +82,11 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         self.button.addAction { [weak self] in
             if let s = self {
-                var credentialsLookGood = true
-
-                let u = s.userIdCell?.textField.text
-                if u?.isEmpty ?? true { credentialsLookGood = false }
-
-                let p = s.passwordCell?.textField.text
-                if p?.isEmpty ?? true { credentialsLookGood = false }
-
-                if credentialsLookGood {
-                    let serverUrl = s.serverUrlCell?.textField.text
-                    s.attemptLogin(userId: u!, password: p!, serverUrl: serverUrl)
-                } else {
-                    log("credentials didn't look good")
-                }
-                //s.continueAction?()
+                s.continueAction?()
             }
         }
 
-        self.pageNumber.text = "1/2"
+        self.pageNumber.text = "2/2"
         self.pageNumber.textColor = .gray
         self.pageNumber.font = Helpers.mainFont(12)
         self.pageNumber.textAlignment = .center
@@ -123,109 +103,35 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.failedFindingServerUrl ? 4 : 3
+        return 1
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if self.cellTypeFor(indexPath.row) == DescriptiveTextCell.self {
-            let t = self.textForDescriptiveCell(indexPath.row)
-            return DescriptiveTextCell.heightFor(self.tableView.frame.size.width, text: t!) + 6
-        } else {
-            return DynamicTextEntryCell.height() + 6
-        }
+        return DynamicTextEntryCell.height() + 6
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let t = self.cellTypeFor(indexPath.row)
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: t))
 
-        if let c = cell as? DescriptiveTextCell {
-            c.set(values: DescriptiveTextCell.Values(text: self.textForDescriptiveCell(indexPath.row), textColor: .gray))
-            self.statusCell = c
-
-        } else if let c = cell as? DynamicTextEntryCell {
+        if let c = cell as? DynamicTextEntryCell {
             c.set(values: valuesFor(cell: indexPath.row))
 
             if indexPath.row == 0 {
                 self.userIdCell = c
-            } else if indexPath.row == 1 {
-                self.serverUrlCell = c
-            } else if indexPath.row == 2 {
-                self.passwordCell = c
             }
         }
         return cell!
     }
 
-    func textForDescriptiveCell(_ row: Int) -> String? {
-        var result: String?
-        if row == 1 && !self.failedFindingServerUrl {
-            result = "@myImessageBot:matrix.org (for example)"
-        } else if row == 2 && self.failedFindingServerUrl {
-            result = "Your server URL wasn't found, but you can enter it here. It will look like https://matrix.org, for example"
-        }
-        return result
-    }
-
     func cellTypeFor(_ row: Int) -> UITableViewCell.Type {
-        if row == 1 && !self.failedFindingServerUrl {
-            return DescriptiveTextCell.self
-        } else if row == 2 && self.failedFindingServerUrl {
-            return DescriptiveTextCell.self
-        } else {
-            return DynamicTextEntryCell.self
-        }
+        return DynamicTextEntryCell.self
     }
 
-    func showInStatusCell(_ text: String) {
-        if var v = self.statusCell?.values {
-            v.text = text
-            DispatchQueue.main.async { () in 
-                self.statusCell?.set(values: v) 
-            }
-        }
-    }
-
-    func promptForServerUrl() {
-        self.failedFindingServerUrl = true
-        DispatchQueue.main.async { () in 
-            self.tableView.insertRows(at:[IndexPath(row: 1, section: 0)], with:.none)
-            self.tableView.reloadRows(at:[IndexPath(row: 2, section: 0)], with:.fade)
-        }
-    }
-
-    func attemptLogin(userId: String, password: String, serverUrl: String? = nil) {
-        if self.matrixHandler == nil {
-            if let url = serverUrl {
-                self.matrixHandler = MatrixHandler(url)
-            } else {
-                log("no server URL. Should prompt the user here")
-            }
-        }
-        self.matrixHandler?.getToken(userId: userId, password: password, completion: { [weak self] (success, token) in
-            if success {
-                if let t = token {
-                    UserDefaults.standard.set(t, forKey: "matrixBotAccessToken")
-                    UserDefaults.standard.set(userId, forKey: "matrixBotUserId")
-                    self?.continueAction?()
-                }
-            } else {
-                log("failed login")
-            }
-        })
-    }
-
-    func handleBotUsernameEntry(_ userId: String?) {
+    func handleUsernameEntry(_ userId: String?) {
         if let uid = userId {
             if MatrixHandler.checkUserIdLooksValid(uid) {
-                MatrixHandler.getHomeserverURL(from: uid, completion: { url in
-                    if let url = url {
-                        self.matrixHandler = MatrixHandler(url)
-                        self.showInStatusCell("Matrix server found ✓")
-                    } else {
-                        self.promptForServerUrl()
-                    }
-                })
+                log("user ID looks good")
             } else {
                 log("that userId does not look valid")
             }
@@ -238,16 +144,11 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         switch cell {
         case 0:
-            values.label = "bot user ID"
+            values.label = "your user ID"
             values.editingEnded = { [weak self] text in
-                self?.handleBotUsernameEntry(text)
+                self?.handleUsernameEntry(text)
             }
         case 1:
-            values.label = "server URL"
-            values.editingEnded = { [weak self] text in
-                log("user entered server URL: \(text ?? "")")
-            }
-        case 2:
             values.label = "password"
             values.secureText = true
         default:

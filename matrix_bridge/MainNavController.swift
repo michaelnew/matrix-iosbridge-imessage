@@ -6,7 +6,12 @@ class MainNavController: UINavigationController {
         super.viewDidLoad()
         self.setNavigationBarHidden(true, animated: false)
 
-        let controllers = [BotSignIn()]
-        self.setViewControllers(controllers, animated: false)
+        let botSignIn = BotSignIn()
+        botSignIn.continueAction = { [weak self] in
+            let userSignIn = UserSignIn()
+            self?.setViewControllers([userSignIn], animated: true)
+        }
+
+        self.setViewControllers([botSignIn], animated: false)
     }
 }

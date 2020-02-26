@@ -16,3 +16,4 @@ UI Design
 * [ ] account sign in (as an Appservice)
       Show a "searching for matrix server" message after a user ID is entered
   * sign in screen: [mockup 1](./design/mockup1.png) [mockup 2](./design/mockup2.png)
+* [ ] Add keyboard movement logic

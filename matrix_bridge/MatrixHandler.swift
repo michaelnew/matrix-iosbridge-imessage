@@ -80,17 +80,21 @@ class MatrixHandler {
         })
     }
 
-    func getToken(userId: String, password: String, homeServerUrl: String){
-        let url = URL(string: homeServerUrl)!
-        self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
+    func getToken(userId: String, password: String, completion: @escaping (Bool, String?) -> ()) {
+        //let url = URL(string: homeServerUrl)!
+        //self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
         self.matrixClient!.login(username: userId, password: password, completion: { (response) in
             switch response {
             case .success(let credentials):
-                log("token:  " + (credentials.accessToken ?? ""))
+                if let t = credentials.accessToken {
+                    completion(true, t)
+                } else {
+                    completion(false, nil)
+                }
                 break
             case .failure(let error):
-                // Handle the error in some way
                 log("error logging in: " + error.localizedDescription)
+                completion(false, nil)
                 break
             }
         })
