@@ -14,6 +14,7 @@ public class Helpers {
 
     public static let matrixBotAccessToken = "matrixBotAccessToken"
     public static let matrixBotUserId = "matrixBotUserId"
+    public static let matrixUserId = "matrixUserId"
     public static let matrixBotServerUrl = "matrixBotServerUrl"
 
     public static func mainFont(_ size: CGFloat) -> UIFont {
