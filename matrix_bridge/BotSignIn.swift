@@ -3,8 +3,6 @@ import Foundation
 
 class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var matrixHandler: MatrixHandler?
-
     lazy var tableView = UITableView()
     lazy var logo = UILabel()
     lazy var subTitle = UILabel()
@@ -17,6 +15,8 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var statusCell: DescriptiveTextCell?
     var continueAction: (() -> Void)?
     var failedFindingServerUrl = false
+    var discoveredServerUrl: String?
+    let matrixHandler = MatrixHandler()
 
     override func loadView() {
         super.loadView()
@@ -187,6 +187,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     func promptForServerUrl() {
         self.failedFindingServerUrl = true
+        self.discoveredServerUrl = nil
         DispatchQueue.main.async { () in 
             self.tableView.insertRows(at:[IndexPath(row: 1, section: 0)], with:.none)
             self.tableView.reloadRows(at:[IndexPath(row: 2, section: 0)], with:.fade)
@@ -194,25 +195,28 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func attemptLogin(userId: String, password: String, serverUrl: String? = nil) {
-        if self.matrixHandler == nil {
-            if let url = serverUrl {
-                self.matrixHandler = MatrixHandler(url)
-                UserDefaults.standard.set(url, forKey: Helpers.matrixBotServerUrl)
-            } else {
-                log("no server URL. Should prompt the user here")
-            }
-        }
-        self.matrixHandler?.getToken(userId: userId, password: password, completion: { [weak self] (success, token) in
-            if success {
-                if let t = token {
-                    UserDefaults.standard.set(t, forKey: "matrixBotAccessToken")
-                    UserDefaults.standard.set(userId, forKey: "matrixBotUserId")
-                    self?.continueAction?()
+        if let u = (self.discoveredServerUrl ?? serverUrl) {
+            log(u)
+            UserDefaults.standard.set(u, forKey: Helpers.matrixBotServerUrl)
+            self.matrixHandler.getToken(userId: userId, password: password, serverUrl: u, completion: { (success, token) in
+                if success {
+                    log("success")
+                    if let t = token {
+                        // Could also maybe store the token in keychain rather than in user defaults
+                        log("got a token")
+                        UserDefaults.standard.set(t, forKey: Helpers.matrixBotAccessToken)
+                        UserDefaults.standard.set(userId, forKey: Helpers.matrixBotUserId)
+                        self.continueAction?()
+                    } else {
+                        log("no token")
+                    }
+                } else {
+                    log("failed login")
                 }
-            } else {
-                log("failed login")
-            }
-        })
+            })
+        } else {
+            log("no server URL. Should prompt the user here")
+        }
     }
 
     func handleBotUsernameEntry(_ userId: String?) {
@@ -220,7 +224,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if MatrixHandler.checkUserIdLooksValid(uid) {
                 MatrixHandler.getHomeserverURL(from: uid, completion: { url in
                     if let url = url {
-                        self.matrixHandler = MatrixHandler(url)
+                        self.discoveredServerUrl = url
                         UserDefaults.standard.set(url, forKey: Helpers.matrixBotServerUrl)
                         self.showInStatusCell("Matrix server found ✓")
                     } else {

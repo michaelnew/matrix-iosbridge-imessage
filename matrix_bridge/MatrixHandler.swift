@@ -5,10 +5,12 @@ class MatrixHandler {
 
     private var matrixClient: MXRestClient?
 
+    /*
     init(_ serverURL: String) {
         let url = URL(string: serverURL)!
         self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
     }
+    */
 
     static func getHomeserverURL(from username: String, completion: @escaping (String?) -> ()) {
         // use this maybe?
@@ -79,24 +81,27 @@ class MatrixHandler {
         })
     }
 
-    func getToken(userId: String, password: String, completion: @escaping (Bool, String?) -> ()) {
-        //let url = URL(string: homeServerUrl)!
-        //self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
-        self.matrixClient!.login(username: userId, password: password, completion: { (response) in
-            switch response {
-            case .success(let credentials):
-                if let t = credentials.accessToken {
-                    completion(true, t)
-                } else {
+    func getToken(userId: String, password: String, serverUrl: String, completion: @escaping (Bool, String?) -> ()) {
+        if let url = URL(string: serverUrl) {
+            self.matrixClient = MXRestClient(homeServer: url, unrecognizedCertificateHandler: nil)
+            self.matrixClient?.login(username: userId, password: password, completion: { (response) in
+                switch response {
+                case .success(let credentials):
+                    if let t = credentials.accessToken {
+                        completion(true, t)
+                    } else {
+                        completion(false, nil)
+                    }
+                    break
+                case .failure(let error):
+                    log("error logging in: " + error.localizedDescription)
                     completion(false, nil)
+                    break
                 }
-                break
-            case .failure(let error):
-                log("error logging in: " + error.localizedDescription)
-                completion(false, nil)
-                break
-            }
-        })
+            })
+        } else {
+            log("bad url")
+        }
     }
 
     func loginToMatrix(userId: String, token: String, homeServerUrl: String) {
@@ -104,7 +109,6 @@ class MatrixHandler {
                                 userId: userId,
                                 accessToken:token)
 
-        // start client earlier
         self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
 
         guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {

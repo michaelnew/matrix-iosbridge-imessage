@@ -21,9 +21,6 @@ class IMessageInterface {
             let name = note.userInfo?["recipientName"] as? String ?? "recipient unkown"
             let i = IMessage(message: message, guid: guid, recipientName: name)
             self.messageRecieved?(i)
-
-            log(message + " (" + name + ")")
-            //self.matrixHandler?.send(message: "\(name): " + message + " (guid: \(guid))")
         }
     }
 }

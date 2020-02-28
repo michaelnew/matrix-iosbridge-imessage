@@ -3,13 +3,14 @@ import Foundation
 
 class StatusPage: UIViewController {
 
-    lazy var tableView = UITableView()
     lazy var logo = UILabel()
     lazy var subTitle = UILabel()
     lazy var subText = UILabel()
     lazy var button = UIButton()
-    var userIdCell: DynamicTextEntryCell?
-    var continueAction: (() -> Void)?
+    var logOutAction: (() -> Void)?
+
+    let imInterface = IMessageInterface()
+    var matrixHandler = MatrixHandler()
 
     override func loadView() {
         super.loadView()
@@ -38,7 +39,7 @@ class StatusPage: UIViewController {
             make.left.right.equalToSuperview()
         }
 
-        self.subText.text = "✓ connected"
+        self.subText.text = "? connected"
         self.subText.textColor = .gray
         self.subText.numberOfLines = 0
         self.subText.font = Helpers.mainFont(12)
@@ -61,8 +62,24 @@ class StatusPage: UIViewController {
 
         self.button.addAction { [weak self] in
             if let s = self {
-                s.continueAction?()
+                UserDefaults.standard.set(nil, forKey: Helpers.matrixBotServerUrl)
+                UserDefaults.standard.set(nil, forKey: Helpers.matrixBotAccessToken)
+                UserDefaults.standard.set(nil, forKey: Helpers.matrixBotUserId)
+                UserDefaults.standard.set(nil, forKey: Helpers.matrixUserId)
+                s.logOutAction?()
             }
         }
+
+        self.imInterface.messageRecieved = { [weak self] (message) in
+            log("message: \(message)")
+        }
+    }
+
+    func attemptMatrixLoginWithStoredCredentials() {
+        guard let token = UserDefaults.standard.string(forKey: Helpers.matrixBotAccessToken) else { return }
+        guard let userId = UserDefaults.standard.string(forKey: Helpers.matrixBotUserId) else { return }
+        guard let homeServerUrl = UserDefaults.standard.string(forKey: Helpers.matrixBotServerUrl) else { return }
+
+        self.matrixHandler.loginToMatrix(userId: userId, token: token, homeServerUrl: homeServerUrl)
     }
 }
