@@ -63,9 +63,8 @@ class MatrixHandler {
 
     static func checkUserIdLooksValid(_ userId: String) -> Bool {
         // TODO: make this smarter
-        return userId.contains("@") && userId.contains(":")
+        return (userId.first == "@") && userId.contains(":")
     }
-
 
     func isMatrixIdInUse(_ userId: String) {
         // this doesn't work if registration is off for the server the user ID is using,

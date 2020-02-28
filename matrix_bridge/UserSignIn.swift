@@ -82,7 +82,19 @@ class UserSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         self.button.addAction { [weak self] in
             if let s = self {
-                s.continueAction?()
+
+                var credentialsLookGood = false
+
+                if let u = s.userIdCell?.textField.text {
+                    credentialsLookGood = MatrixHandler.checkUserIdLooksValid(u)
+                    if credentialsLookGood {
+                        UserDefaults.standard.set(u, forKey: "matrixUserId")
+                        s.continueAction?()
+                    }
+                }
+                if !credentialsLookGood {
+                    log("matrix ID was invalid")
+                }
             }
         }
 
