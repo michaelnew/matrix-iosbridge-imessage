@@ -49,9 +49,10 @@ class StatusPage: UIViewController {
             make.right.equalToSuperview().offset(-Helpers.padding)
         }
 
-        self.button.backgroundColor = Helpers.red
+        self.button.backgroundColor = .black
         self.button.setTitle("log out", for: .normal)
         self.button.titleLabel?.font = Helpers.mainFont(24)
+        self.button.setTitleColor(Helpers.red, for:.normal)
         self.button.layer.cornerRadius = 16;
         self.button.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(70)
@@ -72,7 +73,10 @@ class StatusPage: UIViewController {
 
         self.imInterface.messageRecieved = { [weak self] (message) in
             log("message: \(message)")
+            self?.matrixHandler.send(message: message.text)
         }
+
+        self.attemptMatrixLoginWithStoredCredentials()
     }
 
     func attemptMatrixLoginWithStoredCredentials() {
