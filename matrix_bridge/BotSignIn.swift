@@ -102,7 +102,6 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else {
                     log("credentials didn't look good")
                 }
-                //s.continueAction?()
             }
         }
 
@@ -198,6 +197,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if self.matrixHandler == nil {
             if let url = serverUrl {
                 self.matrixHandler = MatrixHandler(url)
+                UserDefaults.standard.set(url, forKey: Helpers.matrixBotServerUrl)
             } else {
                 log("no server URL. Should prompt the user here")
             }
@@ -221,6 +221,7 @@ class BotSignIn: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 MatrixHandler.getHomeserverURL(from: uid, completion: { url in
                     if let url = url {
                         self.matrixHandler = MatrixHandler(url)
+                        UserDefaults.standard.set(url, forKey: Helpers.matrixBotServerUrl)
                         self.showInStatusCell("Matrix server found ✓")
                     } else {
                         self.promptForServerUrl()
