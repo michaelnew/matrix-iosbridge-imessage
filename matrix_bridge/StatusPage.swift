@@ -76,14 +76,19 @@ class StatusPage: UIViewController {
             self?.matrixHandler.send(message: message.text)
         }
 
-        self.attemptMatrixLoginWithStoredCredentials()
+        self.attemptMatrixLoginWithStoredCredentials { [weak self] (success) in
+            if success { 
+                self?.matrixHandler.listRooms() 
+                self?.matrixHandler.createStatusRoomIfNeeded()
+            }
+        }
     }
 
-    func attemptMatrixLoginWithStoredCredentials() {
+    func attemptMatrixLoginWithStoredCredentials(completion: @escaping (Bool) -> ()) {
         guard let token = UserDefaults.standard.string(forKey: Helpers.matrixBotAccessToken) else { return }
         guard let userId = UserDefaults.standard.string(forKey: Helpers.matrixBotUserId) else { return }
         guard let homeServerUrl = UserDefaults.standard.string(forKey: Helpers.matrixBotServerUrl) else { return }
 
-        self.matrixHandler.loginToMatrix(userId: userId, token: token, homeServerUrl: homeServerUrl)
+        self.matrixHandler.loginToMatrix(userId: userId, token: token, homeServerUrl: homeServerUrl, completion: completion)
     }
 }

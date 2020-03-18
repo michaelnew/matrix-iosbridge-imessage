@@ -4,6 +4,7 @@ import Foundation
 class MatrixHandler {
 
     private var matrixClient: MXRestClient?
+    private var session: MXSession?
 
     /*
     init(_ serverURL: String) {
@@ -104,24 +105,41 @@ class MatrixHandler {
         }
     }
 
-    func loginToMatrix(userId: String, token: String, homeServerUrl: String) {
+    func loginToMatrix(userId: String, token: String, homeServerUrl: String, completion: @escaping (Bool) -> ()) {
         let credentials = MXCredentials(homeServer: homeServerUrl,
                                 userId: userId,
                                 accessToken:token)
 
         self.matrixClient = MXRestClient(credentials: credentials, unrecognizedCertificateHandler: nil)
 
-        guard let mxSession = MXSession(matrixRestClient: self.matrixClient) else {
-            log("couldn't create matrix session")
-            return
+        self.session = MXSession(matrixRestClient: self.matrixClient)
+        if let s = self.session {
+            s.start { response in
+                completion(response.isSuccess)
+            }
+        } else {
+            completion(false)
         }
+    }
 
-        mxSession.start { response in
-            guard response.isSuccess else { return }
+    func listRooms() {
+        log("\(self.session?.rooms)")
+    }
 
-            // mxSession is ready to be used
-            // now wer can get all rooms with:
-            log("\(mxSession.rooms)")
+    func createStatusRoomIfNeeded() {
+        let r = self.session?.room(withRoomId: "!test_room:mikenew.io")
+        _ = r?.liveTimeline.listenToEvents { (event, direction, roomState) in
+            switch direction {
+            case .forwards:
+                // Live/New events come here
+                log("event happened in room!")
+                break
+
+            case .backwards:
+                // Events that occurred in the past will come here when requesting pagination.
+                // roomState contains the state of the room just before this event occurred.
+                break
+            }
         }
     }
 
